@@ -1,4 +1,4 @@
-module blog.hideyoshi.top/welfare-user
+module blog.hideyoshi.top/user
 
 go 1.20
 

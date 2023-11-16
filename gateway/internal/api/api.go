@@ -1,9 +1,9 @@
 package api
 
 import (
-	"blog.hideyoshi.top/welfare-gateway/api/company"
-	"blog.hideyoshi.top/welfare-gateway/api/company_login"
-	"blog.hideyoshi.top/welfare-gateway/router"
+	"blog.hideyoshi.top/gateway/internal/api/company"
+	"blog.hideyoshi.top/gateway/internal/api/company_login"
+	"blog.hideyoshi.top/gateway/router"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,4 +1,4 @@
-module blog.hideyoshi.top/welfare-common
+module blog.hideyoshi.top/common
 
 go 1.20
 

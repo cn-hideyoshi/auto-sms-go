@@ -14,6 +14,7 @@ func InitRouter(r *gin.Engine) {
 	for _, router := range routers {
 		router.Router(r)
 	}
+
 	//router := New()
 	//router.Route(&login.RouterCompany{}, r)
 }

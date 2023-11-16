@@ -1,4 +1,4 @@
-# welfare-go
+# go
 
 > 一个go的gin+grpc的练手项目
 > 

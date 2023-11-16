@@ -1,9 +1,9 @@
 go 1.20
 
 use (
-	welfare-common
-	welfare-company
-	welfare-gateway
-	welfare-user
-	welfare-welfare
+	common
+	company
+	gateway
+	user
+	welfare
 )

@@ -6,7 +6,7 @@ type HandlerCompanyInfo struct {
 }
 
 func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
-	ctx.JSON(200, "login")
+
 }
 
 func (*HandlerCompanyInfo) UpdateCompanyInfo(ctx *gin.Context) {

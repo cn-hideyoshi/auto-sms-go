@@ -5,13 +5,13 @@ package company.v1;
 option go_package = "common/pkg/service/company.v1";
 
 message CompanyInfoRequest {
-    string id = 1;
+  string id = 1;
 }
 
 message CompanyInfoResponse {
-    string test = 1;
+  string test = 1;
 }
 
 service CompanyInfoService {
-    rpc GetCompanyInfo (CompanyInfoRequest) returns (CompanyInfoResponse) {}
+  rpc GetCompanyInfo (CompanyInfoRequest) returns (CompanyInfoResponse) {}
 }

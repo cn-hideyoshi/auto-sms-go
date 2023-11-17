@@ -18,3 +18,13 @@ func (ch *CompanyHandler) Register(req *companyV1.CompanyRegisterRequest) (*comp
 		},
 	}, nil
 }
+
+func (ch *CompanyHandler) Login(req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
+	return &companyV1.CompanyLoginResponse{
+		Response: &companyV1.CompanyResponse{
+			Code: ecode.SUCCESS,
+			Msg:  ecode.GetMsg(ecode.SUCCESS),
+		},
+		Token: "test",
+	}, nil
+}

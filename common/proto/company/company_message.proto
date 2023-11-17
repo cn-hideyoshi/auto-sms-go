@@ -8,3 +8,8 @@ message CompanyResponse {
   int32 code = 1;
   string msg = 2;
 }
+
+message CompanyInfo {
+  int32 id = 1;
+  string username = 2;
+}

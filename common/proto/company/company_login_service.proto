@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package company.v1;
 
-import "company_response.proto";
+import "company_message.proto";
 
 option go_package = "common/pkg/service/company.v1";
 
@@ -11,12 +11,12 @@ message CompanyLoginRequest {
   string password = 2;
 }
 
-message CompanyRegisterRequest {
-  string username = 1;
-  string password = 2;
+message CompanyLoginResponse {
+  CompanyResponse response = 1;
+  string token = 2;
 }
 
-message CompanyLoginResponse {
+message CompanyRegisterRequest {
   CompanyResponse response = 1;
 }
 

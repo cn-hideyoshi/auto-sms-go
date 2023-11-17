@@ -15,12 +15,14 @@ type HandlerCompanyLogin struct {
 func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 	resp := &model.Result{}
 	var loginReq companyV1.CompanyLoginRequest
+
 	err := ctx.Bind(&loginReq)
 	if err != nil {
 		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
 		return
 	}
-	ctx.JSON(http.StatusOK, resp.Success("Login"))
+	rpcResp, err := company.Login(ctx, &loginReq)
+	ctx.JSON(http.StatusOK, resp.Success(rpcResp.Token))
 }
 
 func (*HandlerCompanyLogin) Register(ctx *gin.Context) {
@@ -31,6 +33,7 @@ func (*HandlerCompanyLogin) Register(ctx *gin.Context) {
 		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
 		return
 	}
+
 	_, err := company.Register(ctx, &req)
 	if err != nil {
 		ctx.JSON(http.StatusOK, resp.FailMsg(err.Error()))

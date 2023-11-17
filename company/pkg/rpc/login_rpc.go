@@ -15,13 +15,8 @@ func NewCompanyLoginService() *CompanyLoginService {
 }
 
 func (*CompanyLoginService) Login(ctx context.Context, req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
-	l := &companyV1.CompanyLoginResponse{
-		Response: &companyV1.CompanyResponse{
-			Code: 200,
-			Msg:  "Admin",
-		},
-	}
-	return l, nil
+	loginHandler := handler.CompanyLoginHandler{}
+	return loginHandler.Login(req)
 }
 
 func (*CompanyLoginService) Register(ctx context.Context, req *companyV1.CompanyRegisterRequest) (*companyV1.CompanyRegisterResponse, error) {

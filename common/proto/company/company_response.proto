@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package company.v1;
+
+option go_package = "common/pkg/service/company.v1";
+
+message CompanyResponse {
+    int32 code = 1;
+    string msg = 2;
+}

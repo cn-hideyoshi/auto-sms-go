@@ -15,6 +15,7 @@ func (r *Result) Success(data any) *Result {
 
 func (r *Result) SuccessNoData() *Result {
 	r.Success("")
+	return r
 }
 
 func (r *Result) Fail(code int, message string) *Result {

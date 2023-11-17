@@ -1,5 +1,7 @@
 package model
 
+import "blog.hideyoshi.top/common/pkg/ecode"
+
 type Result struct {
 	Code    int    `json:"code,omitempty"`
 	Message string `json:"message,omitempty"`
@@ -7,8 +9,8 @@ type Result struct {
 }
 
 func (r *Result) Success(data any) *Result {
-	r.Code = 200
-	r.Message = "success"
+	r.Code = ecode.SUCCESS
+	r.Message = ecode.GetMsg(r.Code)
 	r.Data = data
 	return r
 }
@@ -18,8 +20,14 @@ func (r *Result) SuccessNoData() *Result {
 	return r
 }
 
-func (r *Result) Fail(code int, message string) *Result {
+func (r *Result) Fail(code int) *Result {
 	r.Code = code
+	r.Message = ecode.GetMsg(code)
+	return r
+}
+
+func (r *Result) FailMsg(message string) *Result {
+	r.Code = ecode.PANIC_ERR
 	r.Message = message
 	return r
 }

@@ -17,5 +17,6 @@ func (*CompanyInfoService) GetCompanyInfo(ctx context.Context, req *loginService
 	l := &loginServiceV1.CompanyInfoResponse{
 		Test: "Admin",
 	}
+
 	return l, nil
 }

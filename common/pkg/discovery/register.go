@@ -52,7 +52,6 @@ func (er *EtcdRegister) Register(server GrpcServer, ttl int64) (chan<- struct{},
 }
 
 func (er *EtcdRegister) Stop() {
-	log.Println(er.servInfo.Name + " register stop...")
 	er.closeCh <- struct{}{}
 }
 

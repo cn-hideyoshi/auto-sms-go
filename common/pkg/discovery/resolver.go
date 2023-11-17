@@ -48,7 +48,6 @@ func (er *EtcdResolver) Build(target resolver.Target, cc resolver.ClientConn, op
 
 	er.closeCh = make(chan struct{})
 
-	log.Printf("%+v", target.Endpoint())
 	//初始化地址
 	er.queryEtcd()
 

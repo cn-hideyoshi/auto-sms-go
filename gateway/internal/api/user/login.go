@@ -1,8 +1,8 @@
 package user
 
 import (
-	"blog.hideyoshi.top/common/model"
 	userV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
+	"blog.hideyoshi.top/common/types"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -11,7 +11,7 @@ type HandlerCompanyLogin struct {
 }
 
 func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
-	resp := &model.Result{}
+	resp := &types.Result{}
 	var loginReq userV1.UserLoginRequest
 	err := ctx.Bind(&loginReq)
 	if err != nil {
@@ -22,6 +22,6 @@ func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 }
 
 func (*HandlerCompanyLogin) Register(ctx *gin.Context) {
-	resp := &model.Result{}
+	resp := &types.Result{}
 	ctx.JSON(http.StatusOK, resp.Success("Register"))
 }

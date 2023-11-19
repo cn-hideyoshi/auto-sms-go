@@ -1,4 +1,4 @@
-package model
+package types
 
 import "blog.hideyoshi.top/common/pkg/ecode"
 

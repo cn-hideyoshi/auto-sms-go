@@ -17,7 +17,8 @@ message CompanyLoginResponse {
 }
 
 message CompanyRegisterRequest {
-  CompanyResponse response = 1;
+  string username = 1;
+  string password = 2;
 }
 
 message CompanyRegisterResponse {

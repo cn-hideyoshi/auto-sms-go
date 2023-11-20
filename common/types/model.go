@@ -3,7 +3,7 @@ package types
 import "blog.hideyoshi.top/common/pkg/ecode"
 
 type Result struct {
-	Code    int    `json:"code,omitempty"`
+	Code    int32  `json:"code,omitempty"`
 	Message string `json:"message,omitempty"`
 	Data    any    `json:"data,omitempty"`
 }
@@ -20,7 +20,7 @@ func (r *Result) SuccessNoData() *Result {
 	return r
 }
 
-func (r *Result) Fail(code int) *Result {
+func (r *Result) Fail(code int32) *Result {
 	r.Code = code
 	r.Message = ecode.GetMsg(code)
 	return r

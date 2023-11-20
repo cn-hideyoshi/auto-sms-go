@@ -1,7 +1,7 @@
 package ecode
 
 // codeMsg error code msg
-var codeMsg = map[int]string{
+var codeMsg = map[int32]string{
 	//system
 	SUCCESS:      "ok",
 	ERROR:        "fail",
@@ -18,7 +18,7 @@ var codeMsg = map[int]string{
 	USER_EXISTS:         "user exists",
 }
 
-func GetMsg(key int) string {
+func GetMsg(key int32) string {
 	msg, ok := codeMsg[key]
 	if ok {
 		return msg

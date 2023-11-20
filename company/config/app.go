@@ -2,16 +2,16 @@ package config
 
 import (
 	"blog.hideyoshi.top/common/config"
-	"github.com/redis/go-redis/v9"
 )
 
 var C = InitConfig()
 
 type CompanyConfig struct {
 	config.Config
-	Grpc *GrpcConfig
-	Etcd *EtcdConfig
-	Db   *DbConfig
+	Grpc  *GrpcConfig
+	Etcd  *EtcdConfig
+	Db    *DbConfig
+	Redis *RedisConfig
 }
 
 func InitConfig() *CompanyConfig {
@@ -22,6 +22,7 @@ func InitConfig() *CompanyConfig {
 	userConfig.ReadServerConfig()
 	userConfig.ReadEtcdConfig()
 	userConfig.ReadDbConfig()
+	userConfig.ReadRedisConfig()
 	return userConfig
 }
 
@@ -69,10 +70,18 @@ func (c *CompanyConfig) ReadEtcdConfig() {
 	}
 }
 
-func (c *CompanyConfig) ReadRedisConfig() *redis.Options {
-	return &redis.Options{
-		Addr:     c.Viper.GetString("redis.host") + ":" + c.Viper.GetString("redis.port"),
-		Password: c.Viper.GetString("redis.password"),
-		DB:       c.Viper.GetInt("redis.db"),
+type RedisConfig struct {
+	Host string
+	Port uint
+	Pass string
+	DB   uint
+}
+
+func (c *CompanyConfig) ReadRedisConfig() {
+	c.Redis = &RedisConfig{
+		c.Viper.GetString("redis.host"),
+		c.Viper.GetUint("redis.port"),
+		c.Viper.GetString("redis.password"),
+		c.Viper.GetUint("redis.db"),
 	}
 }

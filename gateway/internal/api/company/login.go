@@ -22,7 +22,14 @@ func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 		return
 	}
 	rpcResp, err := company.Login(ctx, &loginReq)
-	ctx.JSON(http.StatusOK, resp.Success(rpcResp.Token))
+	if err != nil {
+		ctx.JSON(http.StatusOK, resp.FailMsg(err.Error()))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, resp.Success(types.LoginResponse{
+		Token: rpcResp.Token,
+	}))
 }
 
 func (*HandlerCompanyLogin) Register(ctx *gin.Context) {

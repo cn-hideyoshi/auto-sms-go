@@ -4,8 +4,13 @@ import (
 	"blog.hideyoshi.top/common/pkg/db/model"
 	"blog.hideyoshi.top/common/pkg/ecode"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
+	"blog.hideyoshi.top/common/utils"
+	"blog.hideyoshi.top/company/internal/cache"
 	"blog.hideyoshi.top/company/internal/db/dao"
-	"log"
+	"blog.hideyoshi.top/company/pkg/util"
+	"encoding/json"
+	"fmt"
+	"github.com/golang-jwt/jwt/v5"
 	"time"
 )
 
@@ -44,19 +49,54 @@ func (ch *CompanyHandler) Register(req *companyV1.CompanyRegisterRequest) (*comp
 
 	err = companyDao.CreateCompany(&company)
 	if err != nil {
-		log.Println(err)
-		companyRes.Code = ecode.ERROR
-		companyRes.Msg = ecode.GetMsg(ecode.ERROR)
+		util.SetErrors(companyRes, ecode.ERROR)
 	}
 	return res, nil
 }
 
 func (ch *CompanyHandler) Login(req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
-	return &companyV1.CompanyLoginResponse{
-		Response: &companyV1.CompanyResponse{
-			Code: ecode.SUCCESS,
-			Msg:  ecode.GetMsg(ecode.SUCCESS),
-		},
-		Token: "test",
-	}, nil
+	companyDao := dao.CompanyDao{}
+	companyRes := &companyV1.CompanyResponse{
+		Code: ecode.SUCCESS,
+		Msg:  ecode.GetMsg(ecode.SUCCESS),
+	}
+	res := &companyV1.CompanyLoginResponse{
+		Response: companyRes,
+	}
+
+	company, err := companyDao.GetCompanyByName(req.Username)
+	if err != nil {
+		util.SetErrors(companyRes, ecode.ERROR)
+		return res, nil
+	}
+
+	claims := jwt.MapClaims{
+		"company_name": company.CompanyName,
+		"company_id":   company.CompanyId,
+		"create_time":  company.CreateTime,
+		"update_time":  company.UpdateTime,
+	}
+	jwtUtils := utils.JWTUtils{
+		Claims: claims,
+		Method: jwt.SigningMethodES256,
+	}
+	encode, err := jwtUtils.Encode()
+	if err != nil {
+		util.SetErrors(companyRes, ecode.ERROR)
+		return res, nil
+	}
+
+	marshal, err := json.Marshal(company)
+	if err != nil {
+		util.SetErrors(companyRes, ecode.ERROR)
+		return res, nil
+	}
+	err = cache.Set(fmt.Sprintf("token:%s", encode), string(marshal), 1000)
+	if err != nil {
+		util.SetErrors(companyRes, ecode.ERROR)
+		return res, nil
+	}
+	res.Token = encode
+
+	return res, nil
 }

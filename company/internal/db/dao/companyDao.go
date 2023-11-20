@@ -27,7 +27,7 @@ func (c *CompanyDao) CreateCompany(company *model.Company) error {
 
 func (c *CompanyDao) GetCompanyById(id int64) (*model.Company, error) {
 	company := &model.Company{}
-	err := _db.Get(company, "select * from wg_company where id=? limit 1", id)
+	err := _db.Get(company, "select * from wg_company where company_id=? limit 1", id)
 	if err != nil {
 		return nil, err
 	}

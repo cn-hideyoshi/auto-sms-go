@@ -5,6 +5,7 @@ import (
 	"blog.hideyoshi.top/gateway/rpc"
 	"context"
 	"errors"
+	"log"
 )
 
 func Login(ctx context.Context, req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
@@ -13,6 +14,7 @@ func Login(ctx context.Context, req *companyV1.CompanyLoginRequest) (*companyV1.
 		return nil, err
 	}
 	if resp.Response.Code != 200 {
+		log.Println("rpc code err", resp)
 		err := errors.New(resp.Response.Msg)
 		return nil, err
 	}
@@ -20,7 +22,6 @@ func Login(ctx context.Context, req *companyV1.CompanyLoginRequest) (*companyV1.
 }
 
 func Register(ctx context.Context, req *companyV1.CompanyRegisterRequest) (*companyV1.CompanyRegisterResponse, error) {
-	//server := rpc.NewGateWayServer()
 	resp, err := rpc.Server.CompanyLoginClient.Register(ctx, req)
 	if err != nil {
 		return nil, err

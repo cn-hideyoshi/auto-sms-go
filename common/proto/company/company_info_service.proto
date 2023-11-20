@@ -4,14 +4,14 @@ package company.v1;
 
 option go_package = "common/pkg/service/company.v1";
 
-message CompanyInfoRequest {
-  string id = 1;
-}
+import "company_message.proto";
 
 message CompanyInfoResponse {
-  string test = 1;
+  CompanyResponse response = 1;
+  CompanyInfo company_info = 2;
 }
 
 service CompanyInfoService {
-  rpc GetCompanyInfo (CompanyInfoRequest) returns (CompanyInfoResponse) {}
+  rpc GetCompanyInfo (CompanyInfo) returns (CompanyInfoResponse) {}
+  rpc UpdateCompanyInfo (CompanyInfo) returns (CompanyInfoResponse) {}
 }

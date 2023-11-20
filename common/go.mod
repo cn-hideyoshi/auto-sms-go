@@ -12,6 +12,8 @@ require (
 	google.golang.org/protobuf v1.31.0
 )
 
+require github.com/jinzhu/copier v0.4.0 // indirect
+
 require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/coreos/go-semver v0.3.0 // indirect

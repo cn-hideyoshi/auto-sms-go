@@ -18,7 +18,7 @@ type CompanyLoginHandler struct {
 	CompanyHandler
 }
 
-func (ch *CompanyHandler) Register(req *companyV1.CompanyRegisterRequest) (*companyV1.CompanyRegisterResponse, error) {
+func (ch *CompanyLoginHandler) Register(req *companyV1.CompanyRegisterRequest) (*companyV1.CompanyRegisterResponse, error) {
 	companyDao := dao.CompanyDao{}
 
 	companyRes := &companyV1.CompanyResponse{
@@ -54,7 +54,7 @@ func (ch *CompanyHandler) Register(req *companyV1.CompanyRegisterRequest) (*comp
 	return res, nil
 }
 
-func (ch *CompanyHandler) Login(req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
+func (ch *CompanyLoginHandler) Login(req *companyV1.CompanyLoginRequest) (*companyV1.CompanyLoginResponse, error) {
 	companyDao := dao.CompanyDao{}
 	companyRes := &companyV1.CompanyResponse{
 		Code: ecode.SUCCESS,

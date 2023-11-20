@@ -27,7 +27,7 @@ func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, resp.Success(types.LoginResponse{
+	ctx.JSON(http.StatusOK, resp.Success(types.CompanyLoginResponse{
 		Token: rpcResp.Token,
 	}))
 }

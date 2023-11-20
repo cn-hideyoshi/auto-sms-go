@@ -8,10 +8,10 @@ import (
 	"net/http"
 )
 
-type HandlerCompanyLogin struct {
+type HandlerUserLogin struct {
 }
 
-func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
+func (*HandlerUserLogin) Login(ctx *gin.Context) {
 	resp := &types.Result{}
 	var loginReq userV1.UserLoginRequest
 	err := ctx.Bind(&loginReq)
@@ -22,7 +22,7 @@ func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, resp.Success("login"))
 }
 
-func (*HandlerCompanyLogin) Register(ctx *gin.Context) {
+func (*HandlerUserLogin) Register(ctx *gin.Context) {
 	resp := &types.Result{}
 	ctx.JSON(http.StatusOK, resp.Success("Register"))
 }

@@ -10,6 +10,9 @@ message CompanyResponse {
 }
 
 message CompanyInfo {
-  int32 id = 1;
-  string username = 2;
+  int32 company_id = 1;
+  string company_name = 2;
+  string company_password = 3;
+  int32 create_time = 4;
+  int32 update_time = 5;
 }

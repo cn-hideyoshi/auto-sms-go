@@ -1,7 +1,7 @@
 package service
 
 import (
-	loginServiceV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
+	loginServiceV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
 	"context"
 )
 

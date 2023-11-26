@@ -1,10 +1,8 @@
-package router
+package server
 
 import (
 	"blog.hideyoshi.top/common/pkg/discovery"
-	loginServiceV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
-	"blog.hideyoshi.top/user/config"
-	"blog.hideyoshi.top/user/internal/service"
+	"blog.hideyoshi.top/gateway/config"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -15,27 +13,26 @@ type GrpcConfig struct {
 	RegisterFunc func(*grpc.Server)
 }
 
-func RegisterEtcd() *discovery.EtcdRegister {
+func NewRegister() {
 	etcdAddr := []string{config.C.Etcd.Addr}
 	register := discovery.NewRegister(etcdAddr)
 
 	server := discovery.GrpcServer{
-		Name: config.C.Grpc.Name,
-		Addr: config.C.Grpc.Addr,
+		Name: config.C.Server.Name,
+		Addr: config.C.Server.Addr,
 	}
 
 	_, err := register.Register(server, 10)
 	if err != nil {
 		log.Fatalln("register etcd fail :", err)
 	}
-	return register
 }
 
-func RegisterGrpc() {
+func RegisterGateway() {
 	c := GrpcConfig{
-		Addr: config.C.Grpc.Addr,
+		Addr: config.C.Server.Addr,
 		RegisterFunc: func(server *grpc.Server) {
-			loginServiceV1.RegisterUserLoginServiceServer(server, service.NewUserLoginService())
+			//no gateway server
 		},
 	}
 	server := grpc.NewServer()
@@ -43,13 +40,13 @@ func RegisterGrpc() {
 
 	lis, err := net.Listen("tcp", c.Addr)
 	if err != nil {
-		log.Println(config.C.Grpc.Name + " 启动GPC失败")
+		log.Println(config.C.Server.Name + " 启动GPC失败")
 
 	}
-	log.Println(config.C.Grpc.Name + " GRPC启动成功..." + config.C.Grpc.Addr)
+	log.Println(config.C.Server.Name + " GRPC启动成功..." + config.C.Server.Addr)
 	err = server.Serve(lis)
 	if err != nil {
-		log.Println(config.C.Grpc.Name+" server started error", err)
+		log.Println(config.C.Server.Name+" server started error", err)
 		return
 	}
 }

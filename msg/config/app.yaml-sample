@@ -1,12 +1,17 @@
 server:
-  name: "company"
+  name: "msg"
+  addr: "127.0.0.1:8081"
 redis:
-  host: "192.168.0.100"
+  host: "127.0.0.1"
   port: 6379
   password: ""
   db: 0
-mysql:
-  host: "192.168.0.100"
+db:
+  driver: "mysql"
+  host: "127.0.0.1"
   port: 3306
   username: "root"
-  password: "root"
+  password: "123456"
+  db_name: "auto-sms-msg"
+etcd:
+  addr: "127.0.0.1:9000"

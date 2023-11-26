@@ -12,5 +12,6 @@ import (
 func main() {
 	r := gin.Default()
 	router.InitRouter(r)
+	go server.RegisterGateway()
 	server.Run(r, config.C.Server.Name, config.C.Server.Addr)
 }

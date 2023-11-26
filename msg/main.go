@@ -1,6 +1,6 @@
 package main
 
-import "blog.hideyoshi.top/welfare/server"
+import "blog.hideyoshi.top/msg/server"
 
 func main() {
 

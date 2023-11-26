@@ -5,5 +5,5 @@ use (
 	company
 	gateway
 	user
-	welfare
+	./msg
 )

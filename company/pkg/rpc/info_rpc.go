@@ -2,6 +2,7 @@ package rpc
 
 import (
 	loginServiceV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
+	"blog.hideyoshi.top/company/internal/handler"
 	"context"
 )
 
@@ -13,10 +14,12 @@ func NewCompanyInfoService() *CompanyInfoService {
 	return &CompanyInfoService{}
 }
 
-func (*CompanyInfoService) GetCompanyInfo(ctx context.Context, req *loginServiceV1.CompanyInfoRequest) (*loginServiceV1.CompanyInfoResponse, error) {
-	l := &loginServiceV1.CompanyInfoResponse{
-		Test: "Admin",
-	}
+func (*CompanyInfoService) GetCompanyInfo(ctx context.Context, req *loginServiceV1.CompanyInfo) (*loginServiceV1.CompanyInfoResponse, error) {
+	companyInfoHandler := handler.CompanyInfoHandler{}
+	return companyInfoHandler.GetCompanyInfo(req)
+}
 
-	return l, nil
+func (*CompanyInfoService) UpdateCompanyInfo(ctx context.Context, req *loginServiceV1.CompanyInfo) (*loginServiceV1.CompanyInfoResponse, error) {
+	companyInfoHandler := handler.CompanyInfoHandler{}
+	return companyInfoHandler.UpdateCompanyInfo(req)
 }

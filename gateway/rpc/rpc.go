@@ -44,6 +44,7 @@ func init() {
 	defer Server.ResolverClose()
 	Server.NewRpcClient("user", &Server.UserLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyLoginClient)
+	Server.NewRpcClient("company", &Server.CompanyInfoClient)
 }
 
 func (gs GatewayServer) NewRpcClient(serverName string, client interface{}) {
@@ -57,6 +58,8 @@ func (gs GatewayServer) NewRpcClient(serverName string, client interface{}) {
 		*c = userV1.NewUserLoginServiceClient(conn)
 	case *companyV1.CompanyLoginServiceClient:
 		*c = companyV1.NewCompanyLoginServiceClient(conn)
+	case *companyV1.CompanyInfoServiceClient:
+		*c = companyV1.NewCompanyInfoServiceClient(conn)
 	default:
 		log.Fatalln("un support grpc module")
 	}

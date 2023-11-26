@@ -34,14 +34,6 @@ func (c *UserConfig) ReadServerConfig() {
 	}
 }
 
-func (c *UserConfig) ReadRedisConfig() *redis.Options {
-	return &redis.Options{
-		Addr:     c.Viper.GetString("redis.host") + ":" + c.Viper.GetString("redis.port"),
-		Password: c.Viper.GetString("redis.password"),
-		DB:       c.Viper.GetInt("redis.db"),
-	}
-}
-
 type EtcdConfig struct {
 	Addr string
 }

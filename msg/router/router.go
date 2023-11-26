@@ -2,9 +2,7 @@ package router
 
 import (
 	"blog.hideyoshi.top/common/pkg/discovery"
-	loginServiceV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
-	"blog.hideyoshi.top/user/config"
-	"blog.hideyoshi.top/user/internal/service"
+	"blog.hideyoshi.top/msg/config"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -35,7 +33,7 @@ func RegisterGrpc() {
 	c := GrpcConfig{
 		Addr: config.C.Grpc.Addr,
 		RegisterFunc: func(server *grpc.Server) {
-			loginServiceV1.RegisterUserLoginServiceServer(server, service.NewUserLoginService())
+			//TODO add msg service
 		},
 	}
 	server := grpc.NewServer()

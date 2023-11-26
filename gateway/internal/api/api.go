@@ -33,6 +33,5 @@ func (*RouterCompany) Router(r *gin.Engine) {
 	{
 		h := &user.HandlerUserLogin{}
 		userApi.POST("Login", h.Login)
-		userApi.POST("Register", h.Register)
 	}
 }

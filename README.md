@@ -1,6 +1,6 @@
 # AUTO-SMS-GO
 
-> 一个go的gin+grpc的练手项目
+> 一个go的gin+grpc的练手项目,目的是熟悉使用golang编程
 >
 > 将用到redis,mysql,rabbitmq等工具
 ## TODO LIST
@@ -15,4 +15,3 @@
 
 - [ ] add rabbitmq support
   - [ ] use rabbitmq implement sms send
-

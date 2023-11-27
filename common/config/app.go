@@ -8,10 +8,12 @@ import (
 
 type Config struct {
 	Viper *viper.Viper
+	//Modules []Configurable
 	Grpc  *GrpcConfig
 	Etcd  *EtcdConfig
 	Db    *DbConfig
 	Redis *RedisConfig
+	Http  *HttpConfig
 }
 
 func NewConfig() Config {
@@ -37,11 +39,17 @@ func (c *Config) ReadConfig(modules []int) {
 		case ModuleEtcd:
 			c.ReadEtcdConfig()
 		case ModuleGrpc:
-			c.ReadServerConfig()
+			c.ReadGrpcConfig()
+		case ModuleHttp:
+			c.ReadHttpConfig()
 		case ModuleRedis:
 			c.ReadRedisConfig()
+		case ReadHttp:
+			c.ReadConfig(httpModule[:])
+		case ReadGrpc:
+			c.ReadConfig(grpcModule[:])
 		case ReadAll:
-			c.ReadConfig(moduleEnum[:])
+			c.ReadConfig(allModule[:])
 		}
 	}
 }

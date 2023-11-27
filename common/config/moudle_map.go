@@ -5,8 +5,15 @@ const (
 	ModuleEtcd
 	ModuleGrpc
 	ModuleRedis
-
-	ReadAll = 999
+	ModuleHttp
 )
 
-var moduleEnum [4]int = [4]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis}
+const (
+	ReadAll = iota + 1000
+	ReadHttp
+	ReadGrpc
+)
+
+var httpModule [4]int = [4]int{ModuleDb, ModuleEtcd, ModuleHttp, ModuleRedis}
+var grpcModule [4]int = [4]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis}
+var allModule [5]int = [5]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis, ModuleHttp}

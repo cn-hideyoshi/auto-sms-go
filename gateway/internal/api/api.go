@@ -4,6 +4,7 @@ import (
 	"blog.hideyoshi.top/gateway/internal/api/company"
 	"blog.hideyoshi.top/gateway/router"
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 func init() {
@@ -14,13 +15,14 @@ type RouterCompany struct {
 }
 
 func (*RouterCompany) Router(r *gin.Engine) {
-	api := r.Group("/api")
-	companyApi := api.Group("/company")
-	{
-		h := &company.HandlerCompanyLogin{}
-		companyApi.POST("Login", h.Login)
-		companyApi.POST("Register", h.Register)
-	}
+	api := r.Group("api")
+	companyApi := api.Group("company")
+	h := &company.HandlerCompanyLogin{}
+	companyApi.POST("T", func(context *gin.Context) {
+		context.JSON(http.StatusOK, gin.H{"A": 2})
+	})
+	companyApi.POST("Login", h.Login)
+	//companyApi.POST("Register", h.Register)
 
 	//authCompany := api.Group("/company")
 	//{

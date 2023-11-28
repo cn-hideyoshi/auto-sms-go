@@ -15,6 +15,6 @@ func InitConfig() *GatewayConfig {
 	c := &GatewayConfig{
 		Config: ViperConfig,
 	}
-	c.ReadConfig([]int{config.ModuleHttp, config.ModuleEtcd, config.ModuleGrpc})
+	c.ReadConfig([]int{config.ModuleHttp, config.ModuleEtcd})
 	return c
 }

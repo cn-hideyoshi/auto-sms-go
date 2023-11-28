@@ -4,6 +4,6 @@ import "blog.hideyoshi.top/msg/router"
 
 func Start() {
 	register := router.RegisterEtcd()
-	register.Stop()
+	defer register.Stop()
 	router.RegisterGrpc()
 }

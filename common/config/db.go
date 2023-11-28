@@ -10,7 +10,7 @@ type DbConfig struct {
 	DbName   string
 }
 
-func (c *Config) ReadDbConfig() {
+func (c *Config) readDbConfig() {
 	c.Db = &DbConfig{
 		Driver:   c.Viper.GetString("db.driver"),
 		Host:     c.Viper.GetString("db.host"),

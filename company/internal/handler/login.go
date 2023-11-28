@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/jinzhu/copier"
 	"time"
 )
 
@@ -31,8 +32,8 @@ func (ch *CompanyLoginHandler) Register(req *companyV1.CompanyRegisterRequest) (
 
 	info, err := companyDao.GetCompanyByName(req.Username)
 	if info != nil && err == nil {
-		companyRes.Code = ecode.COMPANY_EXISTS
-		companyRes.Msg = ecode.GetMsg(ecode.COMPANY_EXISTS)
+		companyRes.Code = ecode.CompanyExists
+		companyRes.Msg = ecode.GetMsg(ecode.CompanyExists)
 		return res, nil
 	} else if err != nil {
 		companyRes.Code = ecode.ERROR
@@ -99,4 +100,27 @@ func (ch *CompanyLoginHandler) Login(req *companyV1.CompanyLoginRequest) (*compa
 	res.Token = encode
 
 	return res, nil
+}
+
+func (ch *CompanyLoginHandler) CheckCompanyToken(req *companyV1.CheckCompanyTokenRequest) *companyV1.CheckCompanyTokenResponse {
+	companyRes := &companyV1.CompanyResponse{
+		Code: ecode.SUCCESS,
+		Msg:  ecode.GetMsg(ecode.SUCCESS),
+	}
+	jwtUtils := utils.JWTUtils{}
+	decode, err := jwtUtils.Decode(req.Token)
+	if err != nil {
+		util.SetErrors(companyRes, ecode.ERROR)
+		return &companyV1.CheckCompanyTokenResponse{
+			Response: companyRes,
+		}
+	}
+
+	info := &companyV1.CompanyInfo{}
+	copier.Copy(info, decode)
+
+	return &companyV1.CheckCompanyTokenResponse{
+		Response:    companyRes,
+		CompanyInfo: info,
+	}
 }

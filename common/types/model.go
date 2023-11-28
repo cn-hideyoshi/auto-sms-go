@@ -27,7 +27,7 @@ func (r *Result) Fail(code int32) *Result {
 }
 
 func (r *Result) FailMsg(message string) *Result {
-	r.Code = ecode.PANIC_ERR
+	r.Code = ecode.PanicErr
 	r.Message = message
 	return r
 }

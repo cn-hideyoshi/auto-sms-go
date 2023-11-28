@@ -35,21 +35,15 @@ func (c *Config) ReadConfig(modules []int) {
 	for _, module := range modules {
 		switch module {
 		case ModuleDb:
-			c.ReadDbConfig()
+			c.readDbConfig()
 		case ModuleEtcd:
-			c.ReadEtcdConfig()
+			c.readEtcdConfig()
 		case ModuleGrpc:
-			c.ReadGrpcConfig()
+			c.readGrpcConfig()
 		case ModuleHttp:
-			c.ReadHttpConfig()
+			c.readHttpConfig()
 		case ModuleRedis:
-			c.ReadRedisConfig()
-		case ReadHttp:
-			c.ReadConfig(httpModule[:])
-		case ReadGrpc:
-			c.ReadConfig(grpcModule[:])
-		case ReadAll:
-			c.ReadConfig(allModule[:])
+			c.readRedisConfig()
 		}
 	}
 }

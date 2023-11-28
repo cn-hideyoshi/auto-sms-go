@@ -26,7 +26,18 @@ message CompanyRegisterResponse {
   string data = 2;
 }
 
+
+message CheckCompanyTokenRequest{
+  string Token = 1;
+}
+
+message CheckCompanyTokenResponse{
+  CompanyResponse response = 1;
+  CompanyInfo company_info = 2;
+}
+
 service CompanyLoginService {
   rpc Login (CompanyLoginRequest) returns (CompanyLoginResponse) {}
   rpc Register (CompanyRegisterRequest) returns (CompanyRegisterResponse) {}
+  rpc CheckCompanyToken(CheckCompanyTokenRequest) returns (CheckCompanyTokenResponse){}
 }

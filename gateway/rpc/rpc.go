@@ -45,6 +45,7 @@ func init() {
 	Server.NewRpcClient("user", &Server.UserLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyInfoClient)
+	log.Println("init client success...")
 }
 
 func (gs GatewayServer) NewRpcClient(serverName string, client interface{}) {

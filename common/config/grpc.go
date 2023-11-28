@@ -5,9 +5,9 @@ type GrpcConfig struct {
 	Addr string
 }
 
-func (c *Config) ReadGrpcConfig() {
+func (c *Config) readGrpcConfig() {
 	c.Grpc = &GrpcConfig{
-		Name: c.Viper.GetString("server.name"),
-		Addr: c.Viper.GetString("server.addr"),
+		Name: c.Viper.GetString("grpc.name"),
+		Addr: c.Viper.GetString("grpc.addr"),
 	}
 }

@@ -2,7 +2,6 @@ package api
 
 import (
 	"blog.hideyoshi.top/gateway/internal/api/company"
-	"blog.hideyoshi.top/gateway/internal/api/user"
 	"blog.hideyoshi.top/gateway/router"
 	"github.com/gin-gonic/gin"
 )
@@ -22,16 +21,20 @@ func (*RouterCompany) Router(r *gin.Engine) {
 		companyApi.POST("Login", h.Login)
 		companyApi.POST("Register", h.Register)
 	}
-	{
-		h := &company.HandlerCompanyInfo{}
-		companyApi.GET("GetCompanyInfo", h.GetCompanyInfo)
-		companyApi.PUT("UpdateCompanyInfo", h.UpdateCompanyInfo)
-		companyApi.POST("DeleteCompanyInfo", h.DeleteCompanyInfo)
-	}
 
-	userApi := api.Group("/user")
-	{
-		h := &user.HandlerUserLogin{}
-		userApi.POST("Login", h.Login)
-	}
+	//authCompany := api.Group("/company")
+	//{
+	//	authCompany.Use(middleware.AuthMiddleware())
+	//	h := &company.HandlerCompanyInfo{}
+	//	authCompany.GET("GetCompanyInfo", h.GetCompanyInfo)
+	//	authCompany.PUT("UpdateCompanyInfo", h.UpdateCompanyInfo)
+	//	authCompany.POST("DeleteCompanyInfo", h.DeleteCompanyInfo)
+	//}
+
+	//userApi := api.Group("/user")
+	//{
+	//	h := &user.HandlerUserLogin{}
+	//	userApi.POST("Login", h.Login)
+	//}
+
 }

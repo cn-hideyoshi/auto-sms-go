@@ -20,7 +20,7 @@ func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
 
 	err := ctx.Bind(&CompanyInfo)
 	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
 		return
 	}
 	rpcResp, err := company.GetCompanyInfo(ctx, &CompanyInfo)
@@ -32,7 +32,7 @@ func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
 	c := &model.Company{}
 	err = copier.Copy(c, rpcResp.CompanyInfo)
 	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.AuthError))
 		return
 	}
 	ctx.JSON(http.StatusOK, resp.Success(types.GetCompanyInfoResponse{
@@ -46,7 +46,7 @@ func (*HandlerCompanyInfo) UpdateCompanyInfo(ctx *gin.Context) {
 
 	err := ctx.Bind(&loginReq)
 	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
 		return
 	}
 	_, err = company.UpdateCompanyInfo(ctx, &loginReq)

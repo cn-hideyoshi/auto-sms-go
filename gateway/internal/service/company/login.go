@@ -32,3 +32,15 @@ func Register(ctx context.Context, req *companyV1.CompanyRegisterRequest) (*comp
 	}
 	return resp, nil
 }
+
+func CheckCompanyToken(ctx context.Context, req *companyV1.CheckCompanyTokenRequest) (*companyV1.CheckCompanyTokenResponse, error) {
+	resp, err := rpc.Server.CompanyLoginClient.CheckCompanyToken(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.Response.Code != 200 {
+		err := errors.New(resp.Response.Msg)
+		return nil, err
+	}
+	return resp, nil
+}

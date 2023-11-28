@@ -18,7 +18,7 @@ func (*HandlerCompanyLogin) Login(ctx *gin.Context) {
 
 	err := ctx.Bind(&loginReq)
 	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
 		return
 	}
 	rpcResp, err := company.Login(ctx, &loginReq)
@@ -37,7 +37,7 @@ func (*HandlerCompanyLogin) Register(ctx *gin.Context) {
 	req := companyV1.CompanyRegisterRequest{}
 
 	if err := ctx.Bind(&req); err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
 		return
 	}
 

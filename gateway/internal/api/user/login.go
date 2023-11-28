@@ -16,7 +16,7 @@ func (*HandlerUserLogin) Login(ctx *gin.Context) {
 	var loginReq userV1.UserLoginRequest
 	err := ctx.Bind(&loginReq)
 	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.PARAMS_ERROR))
+		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
 		return
 	}
 	ctx.JSON(http.StatusOK, resp.Success("login"))

@@ -5,7 +5,7 @@ type HttpConfig struct {
 	Addr string
 }
 
-func (c *Config) ReadHttpConfig() {
+func (c *Config) readHttpConfig() {
 	c.Http = &HttpConfig{
 		Name: c.Viper.GetString("server.name"),
 		Addr: c.Viper.GetString("server.addr"),

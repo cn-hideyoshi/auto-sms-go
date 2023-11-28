@@ -7,7 +7,7 @@ type RedisConfig struct {
 	DB   uint
 }
 
-func (c *Config) ReadRedisConfig() {
+func (c *Config) readRedisConfig() {
 	c.Redis = &RedisConfig{
 		c.Viper.GetString("redis.host"),
 		c.Viper.GetUint("redis.port"),

@@ -3,19 +3,20 @@ package ecode
 // codeMsg error code msg
 var codeMsg = map[int32]string{
 	//system
-	SUCCESS:      "ok",
-	ERROR:        "fail",
-	PARAMS_ERROR: "param error",
-	PANIC_ERR:    "panic error",
+	SUCCESS:     "ok",
+	ERROR:       "fail",
+	ParamsError: "param error",
+	AuthError:   "auth error",
+	PanicErr:    "panic error",
 
 	//company
-	COMPANY_NO_EXISTS:      "company no exists",
-	COMPANY_PASSWORD_ERROR: "company password error",
-	COMPANY_EXISTS:         "company exists",
+	CompanyNoExists:      "company no exists",
+	CompanyPasswordError: "company password error",
+	CompanyExists:        "company exists",
 	//user
-	USER_NO_EXISTS:      "user no exists",
-	USER_PASSWORD_ERROR: "user password error",
-	USER_EXISTS:         "user exists",
+	UserNoExists:      "user no exists",
+	UserPasswordError: "user password error",
+	UserExists:        "user exists",
 }
 
 func GetMsg(key int32) string {

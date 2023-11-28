@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CompanyLoginService_Login_FullMethodName    = "/company.v1.CompanyLoginService/Login"
-	CompanyLoginService_Register_FullMethodName = "/company.v1.CompanyLoginService/Register"
+	CompanyLoginService_Login_FullMethodName             = "/company.v1.CompanyLoginService/Login"
+	CompanyLoginService_Register_FullMethodName          = "/company.v1.CompanyLoginService/Register"
+	CompanyLoginService_CheckCompanyToken_FullMethodName = "/company.v1.CompanyLoginService/CheckCompanyToken"
 )
 
 // CompanyLoginServiceClient is the client API for CompanyLoginService service.
@@ -29,6 +30,7 @@ const (
 type CompanyLoginServiceClient interface {
 	Login(ctx context.Context, in *CompanyLoginRequest, opts ...grpc.CallOption) (*CompanyLoginResponse, error)
 	Register(ctx context.Context, in *CompanyRegisterRequest, opts ...grpc.CallOption) (*CompanyRegisterResponse, error)
+	CheckCompanyToken(ctx context.Context, in *CheckCompanyTokenRequest, opts ...grpc.CallOption) (*CheckCompanyTokenResponse, error)
 }
 
 type companyLoginServiceClient struct {
@@ -57,12 +59,22 @@ func (c *companyLoginServiceClient) Register(ctx context.Context, in *CompanyReg
 	return out, nil
 }
 
+func (c *companyLoginServiceClient) CheckCompanyToken(ctx context.Context, in *CheckCompanyTokenRequest, opts ...grpc.CallOption) (*CheckCompanyTokenResponse, error) {
+	out := new(CheckCompanyTokenResponse)
+	err := c.cc.Invoke(ctx, CompanyLoginService_CheckCompanyToken_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CompanyLoginServiceServer is the server API for CompanyLoginService service.
 // All implementations must embed UnimplementedCompanyLoginServiceServer
 // for forward compatibility
 type CompanyLoginServiceServer interface {
 	Login(context.Context, *CompanyLoginRequest) (*CompanyLoginResponse, error)
 	Register(context.Context, *CompanyRegisterRequest) (*CompanyRegisterResponse, error)
+	CheckCompanyToken(context.Context, *CheckCompanyTokenRequest) (*CheckCompanyTokenResponse, error)
 	mustEmbedUnimplementedCompanyLoginServiceServer()
 }
 
@@ -75,6 +87,9 @@ func (UnimplementedCompanyLoginServiceServer) Login(context.Context, *CompanyLog
 }
 func (UnimplementedCompanyLoginServiceServer) Register(context.Context, *CompanyRegisterRequest) (*CompanyRegisterResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedCompanyLoginServiceServer) CheckCompanyToken(context.Context, *CheckCompanyTokenRequest) (*CheckCompanyTokenResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheckCompanyToken not implemented")
 }
 func (UnimplementedCompanyLoginServiceServer) mustEmbedUnimplementedCompanyLoginServiceServer() {}
 
@@ -125,6 +140,24 @@ func _CompanyLoginService_Register_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CompanyLoginService_CheckCompanyToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckCompanyTokenRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CompanyLoginServiceServer).CheckCompanyToken(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CompanyLoginService_CheckCompanyToken_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CompanyLoginServiceServer).CheckCompanyToken(ctx, req.(*CheckCompanyTokenRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CompanyLoginService_ServiceDesc is the grpc.ServiceDesc for CompanyLoginService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -139,6 +172,10 @@ var CompanyLoginService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _CompanyLoginService_Register_Handler,
+		},
+		{
+			MethodName: "CheckCompanyToken",
+			Handler:    _CompanyLoginService_CheckCompanyToken_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

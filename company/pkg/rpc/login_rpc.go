@@ -23,3 +23,8 @@ func (*CompanyLoginService) Register(ctx context.Context, req *companyV1.Company
 	loginHandler := handler.CompanyLoginHandler{}
 	return loginHandler.Register(req)
 }
+
+func (*CompanyLoginService) CheckCompanyToken(ctx context.Context, req *companyV1.CheckCompanyTokenRequest) (*companyV1.CheckCompanyTokenResponse, error) {
+	loginHandler := handler.CompanyLoginHandler{}
+	return loginHandler.CheckCompanyToken(req), nil
+}

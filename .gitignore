@@ -3,3 +3,4 @@ app.yaml
 auth
 *.go-back
 *_test.go
+*.pb.go

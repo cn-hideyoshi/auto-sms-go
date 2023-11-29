@@ -40,6 +40,6 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Store the login information in the Gin context for later use in subsequent processing.
-		c.Set("LoginInfo", info)
+		c.Set("LoginInfo", info.CompanyInfo)
 	}
 }

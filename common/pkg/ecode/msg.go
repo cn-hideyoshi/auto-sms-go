@@ -8,6 +8,8 @@ var codeMsg = map[int32]string{
 	ParamsError: "param error",
 	AuthError:   "auth error",
 	PanicErr:    "panic error",
+	JwtErr:      "jwt error",
+	RedisErr:    "redis error",
 
 	//company
 	CompanyNoExists:      "company no exists",

@@ -27,8 +27,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CompanyInfoServiceClient interface {
-	GetCompanyInfo(ctx context.Context, in *CompanyInfo, opts ...grpc.CallOption) (*CompanyInfoResponse, error)
-	UpdateCompanyInfo(ctx context.Context, in *CompanyInfo, opts ...grpc.CallOption) (*CompanyInfoResponse, error)
+	GetCompanyInfo(ctx context.Context, in *GetCompanyInfoRequest, opts ...grpc.CallOption) (*CompanyInfoResponse, error)
+	UpdateCompanyInfo(ctx context.Context, in *UpdateCompanyInfoRequest, opts ...grpc.CallOption) (*CompanyInfoResponse, error)
 }
 
 type companyInfoServiceClient struct {
@@ -39,7 +39,7 @@ func NewCompanyInfoServiceClient(cc grpc.ClientConnInterface) CompanyInfoService
 	return &companyInfoServiceClient{cc}
 }
 
-func (c *companyInfoServiceClient) GetCompanyInfo(ctx context.Context, in *CompanyInfo, opts ...grpc.CallOption) (*CompanyInfoResponse, error) {
+func (c *companyInfoServiceClient) GetCompanyInfo(ctx context.Context, in *GetCompanyInfoRequest, opts ...grpc.CallOption) (*CompanyInfoResponse, error) {
 	out := new(CompanyInfoResponse)
 	err := c.cc.Invoke(ctx, CompanyInfoService_GetCompanyInfo_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -48,7 +48,7 @@ func (c *companyInfoServiceClient) GetCompanyInfo(ctx context.Context, in *Compa
 	return out, nil
 }
 
-func (c *companyInfoServiceClient) UpdateCompanyInfo(ctx context.Context, in *CompanyInfo, opts ...grpc.CallOption) (*CompanyInfoResponse, error) {
+func (c *companyInfoServiceClient) UpdateCompanyInfo(ctx context.Context, in *UpdateCompanyInfoRequest, opts ...grpc.CallOption) (*CompanyInfoResponse, error) {
 	out := new(CompanyInfoResponse)
 	err := c.cc.Invoke(ctx, CompanyInfoService_UpdateCompanyInfo_FullMethodName, in, out, opts...)
 	if err != nil {
@@ -61,8 +61,8 @@ func (c *companyInfoServiceClient) UpdateCompanyInfo(ctx context.Context, in *Co
 // All implementations must embed UnimplementedCompanyInfoServiceServer
 // for forward compatibility
 type CompanyInfoServiceServer interface {
-	GetCompanyInfo(context.Context, *CompanyInfo) (*CompanyInfoResponse, error)
-	UpdateCompanyInfo(context.Context, *CompanyInfo) (*CompanyInfoResponse, error)
+	GetCompanyInfo(context.Context, *GetCompanyInfoRequest) (*CompanyInfoResponse, error)
+	UpdateCompanyInfo(context.Context, *UpdateCompanyInfoRequest) (*CompanyInfoResponse, error)
 	mustEmbedUnimplementedCompanyInfoServiceServer()
 }
 
@@ -70,10 +70,10 @@ type CompanyInfoServiceServer interface {
 type UnimplementedCompanyInfoServiceServer struct {
 }
 
-func (UnimplementedCompanyInfoServiceServer) GetCompanyInfo(context.Context, *CompanyInfo) (*CompanyInfoResponse, error) {
+func (UnimplementedCompanyInfoServiceServer) GetCompanyInfo(context.Context, *GetCompanyInfoRequest) (*CompanyInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetCompanyInfo not implemented")
 }
-func (UnimplementedCompanyInfoServiceServer) UpdateCompanyInfo(context.Context, *CompanyInfo) (*CompanyInfoResponse, error) {
+func (UnimplementedCompanyInfoServiceServer) UpdateCompanyInfo(context.Context, *UpdateCompanyInfoRequest) (*CompanyInfoResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateCompanyInfo not implemented")
 }
 func (UnimplementedCompanyInfoServiceServer) mustEmbedUnimplementedCompanyInfoServiceServer() {}
@@ -90,7 +90,7 @@ func RegisterCompanyInfoServiceServer(s grpc.ServiceRegistrar, srv CompanyInfoSe
 }
 
 func _CompanyInfoService_GetCompanyInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompanyInfo)
+	in := new(GetCompanyInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -102,13 +102,13 @@ func _CompanyInfoService_GetCompanyInfo_Handler(srv interface{}, ctx context.Con
 		FullMethod: CompanyInfoService_GetCompanyInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CompanyInfoServiceServer).GetCompanyInfo(ctx, req.(*CompanyInfo))
+		return srv.(CompanyInfoServiceServer).GetCompanyInfo(ctx, req.(*GetCompanyInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _CompanyInfoService_UpdateCompanyInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CompanyInfo)
+	in := new(UpdateCompanyInfoRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func _CompanyInfoService_UpdateCompanyInfo_Handler(srv interface{}, ctx context.
 		FullMethod: CompanyInfoService_UpdateCompanyInfo_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CompanyInfoServiceServer).UpdateCompanyInfo(ctx, req.(*CompanyInfo))
+		return srv.(CompanyInfoServiceServer).UpdateCompanyInfo(ctx, req.(*UpdateCompanyInfoRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

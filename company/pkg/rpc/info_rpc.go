@@ -14,12 +14,12 @@ func NewCompanyInfoService() *CompanyInfoService {
 	return &CompanyInfoService{}
 }
 
-func (*CompanyInfoService) GetCompanyInfo(ctx context.Context, req *loginServiceV1.CompanyInfo) (*loginServiceV1.CompanyInfoResponse, error) {
+func (*CompanyInfoService) GetCompanyInfo(ctx context.Context, req *loginServiceV1.GetCompanyInfoRequest) (*loginServiceV1.CompanyInfoResponse, error) {
 	companyInfoHandler := handler.CompanyInfoHandler{}
 	return companyInfoHandler.GetCompanyInfo(req)
 }
 
-func (*CompanyInfoService) UpdateCompanyInfo(ctx context.Context, req *loginServiceV1.CompanyInfo) (*loginServiceV1.CompanyInfoResponse, error) {
+func (*CompanyInfoService) UpdateCompanyInfo(ctx context.Context, req *loginServiceV1.UpdateCompanyInfoRequest) (*loginServiceV1.CompanyInfoResponse, error) {
 	companyInfoHandler := handler.CompanyInfoHandler{}
 	return companyInfoHandler.UpdateCompanyInfo(req)
 }

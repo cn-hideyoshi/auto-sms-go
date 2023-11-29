@@ -11,7 +11,16 @@ message CompanyInfoResponse {
   CompanyInfo company_info = 2;
 }
 
+message GetCompanyInfoRequest {
+  int64 company_id = 1;
+}
+
+message UpdateCompanyInfoRequest {
+  int64 company_id = 1;
+  CompanyInfo company_info = 2;
+}
+
 service CompanyInfoService {
-  rpc GetCompanyInfo (CompanyInfo) returns (CompanyInfoResponse) {}
-  rpc UpdateCompanyInfo (CompanyInfo) returns (CompanyInfoResponse) {}
+  rpc GetCompanyInfo (GetCompanyInfoRequest) returns (CompanyInfoResponse) {}
+  rpc UpdateCompanyInfo (UpdateCompanyInfoRequest) returns (CompanyInfoResponse) {}
 }

@@ -3,46 +3,49 @@ package utils
 import (
 	"crypto/ecdsa"
 	"errors"
-	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"log"
 )
 
 type JWTUtils struct {
-	Claims jwt.MapClaims
+	Claims JwtClaims
 	Method jwt.SigningMethod
 	Secret ecdsa.PublicKey
 }
 
+var secret = []byte("blog.hideyoshi.top")
+
+type JwtClaims struct {
+	Data interface{}
+	jwt.RegisteredClaims
+}
+
 func (j JWTUtils) Encode() (string, error) {
 	token := jwt.NewWithClaims(j.Method, j.Claims)
-	//secret := []byte("hideyoshi.top")
-	signingString, err := token.SigningString()
+	signingString, err := token.SignedString(secret)
 	if err != nil {
+		log.Println(err)
 		return "", err
 	}
 	return signingString, err
 }
 
-func (j JWTUtils) Decode(tokenStr string) (jwt.MapClaims, error) {
-	secret := []byte("hideyoshi.top")
-	token, err := jwt.Parse(tokenStr, func(token *jwt.Token) (interface{}, error) {
-		// Check the signing method
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		// Return the secret key
+func (j JWTUtils) Decode(tokenStr string) (*JwtClaims, error) {
+	token, err := jwt.ParseWithClaims(tokenStr, &JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return secret, nil
 	})
 	if err != nil {
 		return nil, err
 	}
 
-	// Check if the token is valid
-	if token.Valid {
-		return nil, errors.New("invalid token")
+	if !token.Valid {
+		return nil, errors.New("claim invalid")
 	}
-	// Get the claims from the token
-	claims := token.Claims.(jwt.MapClaims)
-	// Print the claims
+
+	claims, ok := token.Claims.(*JwtClaims)
+	if !ok {
+		return nil, errors.New("invalid claim type")
+	}
+
 	return claims, nil
 }

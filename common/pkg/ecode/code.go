@@ -7,6 +7,8 @@ const (
 	ParamsError = 400
 	AuthError   = 401
 	PanicErr    = 999
+	JwtErr      = 595 + iota
+	RedisErr
 )
 
 // company const

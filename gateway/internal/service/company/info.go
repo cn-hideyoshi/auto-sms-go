@@ -7,7 +7,7 @@ import (
 	"errors"
 )
 
-func GetCompanyInfo(ctx context.Context, req *companyV1.CompanyInfo) (*companyV1.CompanyInfoResponse, error) {
+func GetCompanyInfo(ctx context.Context, req *companyV1.GetCompanyInfoRequest) (*companyV1.CompanyInfoResponse, error) {
 	resp, err := rpc.Server.CompanyInfoClient.GetCompanyInfo(ctx, req)
 	if err != nil {
 		return nil, err
@@ -19,7 +19,7 @@ func GetCompanyInfo(ctx context.Context, req *companyV1.CompanyInfo) (*companyV1
 	return resp, nil
 }
 
-func UpdateCompanyInfo(ctx context.Context, req *companyV1.CompanyInfo) (*companyV1.CompanyInfoResponse, error) {
+func UpdateCompanyInfo(ctx context.Context, req *companyV1.UpdateCompanyInfoRequest) (*companyV1.CompanyInfoResponse, error) {
 	resp, err := rpc.Server.CompanyInfoClient.UpdateCompanyInfo(ctx, req)
 	if err != nil {
 		return nil, err

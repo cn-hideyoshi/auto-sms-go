@@ -20,7 +20,7 @@ func TestDatabase_InitDb(t *testing.T) {
 		log.Fatalln(err)
 	}
 
-	queryx, err := database.Db.Queryx("select * from wg_test")
+	queryx, err := database.Db.Queryx("select * from as_test")
 	if err != nil {
 		log.Fatalln(err)
 	}

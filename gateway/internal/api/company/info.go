@@ -9,21 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/copier"
 	"net/http"
+	"time"
 )
 
 type HandlerCompanyInfo struct {
 }
 
 func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
+	info, _ := ctx.Get("LoginInfo")
 	resp := types.Result{}
-	var CompanyInfo companyV1.CompanyInfo
-
-	err := ctx.Bind(&CompanyInfo)
-	if err != nil {
-		ctx.JSON(http.StatusOK, resp.Fail(ecode.ParamsError))
-		return
-	}
-	rpcResp, err := company.GetCompanyInfo(ctx, &CompanyInfo)
+	var getCompanyInfoReq companyV1.GetCompanyInfoRequest
+	getCompanyInfoReq.CompanyId = info.(*companyV1.CompanyInfo).CompanyId
+	rpcResp, err := company.GetCompanyInfo(ctx, &getCompanyInfoReq)
 	if err != nil {
 		ctx.JSON(http.StatusOK, resp.FailMsg(err.Error()))
 		return
@@ -31,6 +28,8 @@ func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
 
 	c := &model.Company{}
 	err = copier.Copy(c, rpcResp.CompanyInfo)
+	c.CreateTime = time.Unix(rpcResp.CompanyInfo.CreateTime, 0)
+	c.UpdateTime = time.Unix(rpcResp.CompanyInfo.UpdateTime, 0)
 	if err != nil {
 		ctx.JSON(http.StatusOK, resp.Fail(ecode.AuthError))
 		return
@@ -42,7 +41,7 @@ func (*HandlerCompanyInfo) GetCompanyInfo(ctx *gin.Context) {
 
 func (*HandlerCompanyInfo) UpdateCompanyInfo(ctx *gin.Context) {
 	resp := types.Result{}
-	var loginReq companyV1.CompanyInfo
+	var loginReq companyV1.UpdateCompanyInfoRequest
 
 	err := ctx.Bind(&loginReq)
 	if err != nil {

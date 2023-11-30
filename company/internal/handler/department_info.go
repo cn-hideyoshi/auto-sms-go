@@ -4,10 +4,13 @@ import (
 	"blog.hideyoshi.top/common/pkg/db/model"
 	"blog.hideyoshi.top/common/pkg/ecode"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
+	"blog.hideyoshi.top/company/internal/cache"
 	"blog.hideyoshi.top/company/internal/db/dao"
 	"blog.hideyoshi.top/company/pkg/util"
 	"database/sql"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"time"
 )
@@ -111,12 +114,22 @@ func (h DepartmentInfoHandler) UpdateDepartment(req *companyV1.UpdateDepartmentR
 }
 
 func (h DepartmentInfoHandler) GetDepartmentTree(req *companyV1.GetDepartmentTreeRequest) *companyV1.GetDepartmentTreeResponse {
-
 	res := &companyV1.GetDepartmentTreeResponse{
 		Response: &companyV1.CompanyResponse{
 			Code: ecode.SUCCESS,
 			Msg:  ecode.GetMsg(ecode.SUCCESS),
 		},
+	}
+	redisKey := fmt.Sprintf("department:parent%d:", req.DepartmentParent)
+	treeStr, err := cache.Get(redisKey)
+	if err == nil {
+		var tree []*companyV1.DepartmentTree
+		err := json.Unmarshal([]byte(treeStr), &tree)
+		if err == nil {
+			res.DepartmentTree = tree
+			return res
+		}
+		log.Println("get department json unmarshal err:", err, "use uncached data")
 	}
 
 	departmentDao := dao.DepartmentDao{}
@@ -130,28 +143,29 @@ func (h DepartmentInfoHandler) GetDepartmentTree(req *companyV1.GetDepartmentTre
 		return res
 	}
 	tree := h.buildTree(departments, req.DepartmentParent)
+	marshal, err := json.Marshal(tree)
+	err = cache.Set(redisKey, string(marshal), 10000)
 	res.DepartmentTree = tree
 	return res
 }
 
 func (h DepartmentInfoHandler) buildTree(departments []*model.Department, parentId int64) []*companyV1.DepartmentTree {
-	root := &companyV1.DepartmentTree{}
+	var tree []*companyV1.DepartmentTree
 	for _, department := range departments {
 		if department.DepartmentParent == parentId {
-			info := &companyV1.DepartmentInfo{
-				DepartmentId:   department.DepartmentId,
-				DepartmentName: department.DepartmentName,
-				CompanyId:      department.CompanyId,
-				CreateTime:     department.CreateTime.Unix(),
-				UpdateTime:     department.UpdateTime.Unix(),
+			newChild := &companyV1.DepartmentTree{
+				DepartmentInfo: &companyV1.DepartmentInfo{
+					DepartmentId:     department.DepartmentId,
+					DepartmentName:   department.DepartmentName,
+					DepartmentParent: department.DepartmentParent,
+					CompanyId:        department.CompanyId,
+					CreateTime:       department.CreateTime.Unix(),
+					UpdateTime:       department.UpdateTime.Unix(),
+				},
+				Node: h.buildTree(departments, department.DepartmentId),
 			}
-			node := &companyV1.DepartmentTree{DepartmentInfo: info}
-			node.Node = h.buildTree(departments, department.DepartmentId)
-			root.Node = append(root.Node, node)
+			tree = append(tree, newChild)
 		}
 	}
-	if len(root.Node) == 0 && root.DepartmentInfo == nil {
-		return nil
-	}
-	return []*companyV1.DepartmentTree{root}
+	return tree
 }

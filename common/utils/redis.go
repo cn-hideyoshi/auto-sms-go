@@ -16,7 +16,7 @@ type RedisUtils struct {
 func (r *RedisUtils) InitClient() {
 	r.Client = redis.NewClient(&redis.Options{
 		Addr:     fmt.Sprintf("%s:%d", r.Host, r.Port),
-		Password: r.Pass,    // 没有密码
-		DB:       int(r.DB), // 使用默认数据库
+		Password: r.Pass,
+		DB:       int(r.DB),
 	})
 }

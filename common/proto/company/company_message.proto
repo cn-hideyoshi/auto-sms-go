@@ -29,5 +29,5 @@ message DepartmentInfo{
 
 message DepartmentTree{
   DepartmentInfo department_info = 1;
-  repeated DepartmentTree Node = 2;
+  repeated DepartmentTree node = 2;
 }

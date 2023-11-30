@@ -20,16 +20,24 @@ func init() {
 	Cache.InitClient()
 }
 
+var keyPre = "company:"
+
+func buildKey(key string) string {
+	return fmt.Sprintf("%s%s", keyPre, key)
+}
 func Set(key string, value interface{}, expireSec int) error {
 	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancelFunc()
-	err := Cache.Client.Set(ctx, fmt.Sprintf("company:%s", key), value, time.Duration(expireSec)*time.Second).Err()
+	err := Cache.Client.Set(ctx, buildKey(key), value, time.Duration(expireSec)*time.Second).Err()
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func Get(key string) {
-
+func Get(key string) (string, error) {
+	ctx, cancelFunc := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancelFunc()
+	value := Cache.Client.Get(ctx, buildKey(key))
+	return value.Result()
 }

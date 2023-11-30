@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package company.v1;
+
+option go_package = "common/pkg/service/company.v1";
+
+import "company_message.proto";
+
+message CreateDepartmentRequest {
+  DepartmentInfo department_info = 1;
+}
+
+message CreateDepartmentResponse {
+  CompanyResponse response = 1;
+}
+
+message GetDepartmentRequest {
+  int64 department_id = 1;
+}
+
+message GetDepartmentResponse {
+  CompanyResponse response = 1;
+  DepartmentInfo department_info = 2;
+}
+
+message UpdateDepartmentRequest {
+  int64 department_id = 1;
+  DepartmentInfo department_info = 2;
+}
+
+message UpdateDepartmentResponse {
+  CompanyResponse response = 1;
+  DepartmentInfo department_info = 2;
+}
+
+message GetDepartmentTreeRequest {
+  int64 company_id = 1;
+  int64 department_parent = 2;
+}
+
+message GetDepartmentTreeResponse {
+  CompanyResponse response = 1;
+  repeated DepartmentTree department_tree = 2;
+}
+
+
+service DepartmentInfoService{
+  rpc CreateDepartment(CreateDepartmentRequest)returns(CreateDepartmentResponse);
+  rpc GetDepartment(GetDepartmentRequest)returns(GetDepartmentResponse);
+  rpc UpdateDepartment(UpdateDepartmentRequest)returns(UpdateDepartmentResponse);
+  rpc GetDepartmentTree(GetDepartmentTreeRequest)returns(GetDepartmentTreeResponse);
+}

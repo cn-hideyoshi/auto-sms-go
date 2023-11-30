@@ -37,6 +37,7 @@ func RegisterGrpc() {
 		RegisterFunc: func(server *grpc.Server) {
 			loginServiceV1.RegisterCompanyLoginServiceServer(server, rpc.NewCompanyLoginService())
 			loginServiceV1.RegisterCompanyInfoServiceServer(server, rpc.NewCompanyInfoService())
+			loginServiceV1.RegisterDepartmentInfoServiceServer(server, rpc.NewDepartmentInfoService())
 		},
 	}
 	server := grpc.NewServer()

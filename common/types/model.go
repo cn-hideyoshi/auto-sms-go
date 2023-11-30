@@ -31,3 +31,8 @@ func (r *Result) FailMsg(message string) *Result {
 	r.Message = message
 	return r
 }
+
+type Pages struct {
+	Page     int32
+	PageSize int32
+}

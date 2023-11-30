@@ -25,9 +25,10 @@ type GatewayServer struct {
 	connMap map[string]*grpc.ClientConn
 	mapLock sync.Mutex
 
-	UserLoginClient    userV1.UserLoginServiceClient
-	CompanyLoginClient companyV1.CompanyLoginServiceClient
-	CompanyInfoClient  companyV1.CompanyInfoServiceClient
+	UserLoginClient      userV1.UserLoginServiceClient
+	CompanyLoginClient   companyV1.CompanyLoginServiceClient
+	CompanyInfoClient    companyV1.CompanyInfoServiceClient
+	DepartmentInfoClient companyV1.DepartmentInfoServiceClient
 }
 
 // NewGateWayServer creates a new instance of the GatewayServer.
@@ -54,6 +55,7 @@ func init() {
 	Server.NewRpcClient("user", &Server.UserLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyInfoClient)
+	Server.NewRpcClient("company", &Server.DepartmentInfoClient)
 	defer Server.ResolverClose()
 	log.Println("init client success...")
 }
@@ -71,6 +73,8 @@ func (gs *GatewayServer) NewRpcClient(serverName string, client interface{}) {
 		*c = companyV1.NewCompanyLoginServiceClient(conn)
 	case *companyV1.CompanyInfoServiceClient:
 		*c = companyV1.NewCompanyInfoServiceClient(conn)
+	case *companyV1.DepartmentInfoServiceClient:
+		*c = companyV1.NewDepartmentInfoServiceClient(conn)
 	default:
 		log.Fatalln("not support the grpc module")
 	}

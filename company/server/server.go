@@ -1,6 +1,8 @@
 package server
 
-import "blog.hideyoshi.top/company/router"
+import (
+	"blog.hideyoshi.top/company/router"
+)
 
 func Start() {
 	register := router.RegisterEtcd()

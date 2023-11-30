@@ -16,3 +16,18 @@ message CompanyInfo {
   int64 create_time = 4;
   int64 update_time = 5;
 }
+
+message DepartmentInfo{
+  int64 department_id = 1;
+  int64 department_parent = 2;
+  string department_name = 3;
+  int64 company_id = 4;
+  int64 create_time = 5;
+  int64 update_time = 6;
+}
+
+
+message DepartmentTree{
+  DepartmentInfo department_info = 1;
+  repeated DepartmentTree Node = 2;
+}

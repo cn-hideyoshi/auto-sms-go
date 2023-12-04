@@ -15,7 +15,7 @@ func NewUserLoginService() *UserLoginService {
 
 func (*UserLoginService) Login(ctx context.Context, req *loginServiceV1.UserLoginRequest) (*loginServiceV1.UserLoginResponse, error) {
 	l := &loginServiceV1.UserLoginResponse{
-		Test: "Admin",
+		//Test: "Admin",
 	}
 	return l, nil
 }

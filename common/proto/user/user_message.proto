@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "common/pkg/service/user.v1";
+
+message UserResponse {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message UserInfo {
+  int64 user_id = 1;
+  int64 company_id = 2;
+  int64 department_id = 3;
+  string user_name = 4;
+  string user_password = 5;
+  int64 create_time = 6;
+  int64 update_time = 7;
+}

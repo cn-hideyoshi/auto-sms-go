@@ -8,4 +8,4 @@ const (
 	ModuleHttp
 )
 
-var GrpcModules [4]int = [4]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis}
+var GrpcModules = [4]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis}

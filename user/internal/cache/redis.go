@@ -2,8 +2,7 @@ package cache
 
 import (
 	"blog.hideyoshi.top/common/utils"
-	"blog.hideyoshi.top/company/config"
-	"fmt"
+	"blog.hideyoshi.top/user/config"
 )
 
 var Cache *utils.RedisUtils
@@ -17,10 +16,4 @@ func init() {
 		DB:     config.C.Redis.DB,
 	}
 	Cache.InitClient()
-}
-
-var keyPre = "company:"
-
-func buildKey(key string) string {
-	return fmt.Sprintf("%s%s", keyPre, key)
 }

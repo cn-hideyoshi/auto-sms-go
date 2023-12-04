@@ -121,7 +121,7 @@ func (h DepartmentInfoHandler) GetDepartmentTree(req *companyV1.GetDepartmentTre
 		},
 	}
 	redisKey := fmt.Sprintf("department:parent%d:", req.DepartmentParent)
-	treeStr, err := cache.Get(redisKey)
+	treeStr, err := cache.Cache.Get(redisKey)
 	if err == nil {
 		var tree []*companyV1.DepartmentTree
 		err := json.Unmarshal([]byte(treeStr), &tree)
@@ -144,7 +144,7 @@ func (h DepartmentInfoHandler) GetDepartmentTree(req *companyV1.GetDepartmentTre
 	}
 	tree := h.buildTree(departments, req.DepartmentParent)
 	marshal, err := json.Marshal(tree)
-	err = cache.Set(redisKey, string(marshal), 10000)
+	err = cache.Cache.Set(redisKey, string(marshal), 10000)
 	res.DepartmentTree = tree
 	return res
 }

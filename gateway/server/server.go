@@ -1,6 +1,7 @@
 package server
 
 import (
+	"blog.hideyoshi.top/gateway/rpc"
 	"context"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -39,5 +40,6 @@ func Run(r *gin.Engine, servName string, addr string) {
 	case <-ctx.Done():
 		log.Printf("等待%s关闭...", servName)
 	}
+	rpc.Server.ResolverClose()
 	log.Printf("%s关闭成功", servName)
 }

@@ -1,11 +1,10 @@
 package model
 
-import "time"
-
 type User struct {
-	Id           int64     `db:"id" json:"id"`
-	UserName     string    `db:"user_name" json:"userName"`
-	UserPassword string    `db:"user_password" json:"userPassword"`
-	CreateTime   time.Time `db:"create_time" json:"create_time"`
-	UpdateTime   time.Time `db:"update_time" json:"update_time"`
+	UserId       int64  `db:"user_id" json:"user_id"`
+	UserName     string `db:"user_name" json:"user_name"`
+	UserPassword string `db:"user_password" json:"user_password"`
+	CompanyId    int64  `db:"company_id" json:"company_id"`
+	DepartmentId int64  `db:"department_id" json:"department_id"`
+	BaseModel
 }

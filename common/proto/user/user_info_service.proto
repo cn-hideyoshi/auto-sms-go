@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+
+package user.v1;
+
+option go_package = "common/pkg/service/user.v1";
+
+import "user_message.proto";
+
+message GetUserInfoRequest {
+  int64 user_id = 1;
+}
+
+message GetUserInfoResponse{
+  UserResponse response = 1;
+  UserInfo user_info = 2;
+}
+
+message UpdateUserInfoRequest {
+  UserInfo user_info = 2;
+}
+
+message UpdateUserInfoResponse {
+  UserResponse response = 1;
+  UserInfo user_info = 2;
+}
+
+message CreateUserInfoRequest{
+  UserInfo user_info = 1;
+}
+
+message CreateUserInfoResponse{
+  UserResponse response = 1;
+  UserInfo user_info = 2;
+}
+
+service UserInfoService {
+  rpc CreateUserInfo(CreateUserInfoRequest) returns (CreateUserInfoResponse) {}
+  rpc GetUserInfo (GetUserInfoRequest) returns (GetUserInfoResponse) {}
+  rpc UpdateUserInfo (UpdateUserInfoRequest) returns (UpdateUserInfoResponse) {}
+}

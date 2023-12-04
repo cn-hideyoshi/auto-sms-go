@@ -93,7 +93,7 @@ func (ch *CompanyLoginHandler) Login(req *companyV1.CompanyLoginRequest) (*compa
 		util.SetErrors(companyRes, ecode.ERROR)
 		return res, nil
 	}
-	err = cache.Set(fmt.Sprintf("token:%s", token), string(marshal), 1000)
+	err = cache.Cache.Set(fmt.Sprintf("token:%s", token), string(marshal), 1000)
 	if err != nil {
 		util.SetErrors(companyRes, ecode.RedisErr)
 		return res, nil

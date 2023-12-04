@@ -61,6 +61,8 @@ func (er *EtcdResolver) watchUpdates() {
 	for {
 		select {
 		case <-er.closeCh:
+			log.Println("resolver closed")
+			close(er.closeCh)
 			return
 		case <-ticker.C:
 			err := er.queryEtcd()

@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"blog.hideyoshi.top/common/pkg/db/model"
+	model "blog.hideyoshi.top/common/pkg/db/model/company"
 	"fmt"
 	"strings"
 )

@@ -1,6 +1,6 @@
 package types
 
-import "blog.hideyoshi.top/common/pkg/db/model"
+import model "blog.hideyoshi.top/common/pkg/db/model/company"
 
 type CompanyLoginResponse struct {
 	Token string `json:"token"`

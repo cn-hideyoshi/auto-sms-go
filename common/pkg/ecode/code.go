@@ -24,3 +24,9 @@ const (
 	UserPasswordError
 	UserExists
 )
+
+// msg const
+const (
+	MsgGroupNoExists = 30001 + iota
+	MsgGroupExists
+)

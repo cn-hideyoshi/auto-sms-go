@@ -16,7 +16,7 @@ func Start() {
 	c := server.GrpcConfig{
 		Addr: config.C.Grpc.Addr,
 		RegisterFunc: func(server *grpc.Server) {
-			userV1.RegisterUserLoginServiceServer(server, service.NewUserLoginService())
+			userV1.RegisterUserPhoneServiceServer(server, service.NewUserPhoneService())
 			userV1.RegisterUserInfoServiceServer(server, service.NewUserInfoService())
 		},
 	}

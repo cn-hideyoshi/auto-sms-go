@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog.hideyoshi.top/common/pkg/db/model"
+	model "blog.hideyoshi.top/common/pkg/db/model/user"
 	"blog.hideyoshi.top/common/pkg/ecode"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
 	userV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
@@ -88,21 +88,60 @@ func (h InfoHandler) UpdateUserInfo(req *userV1.UpdateUserInfoRequest) *userV1.U
 	}
 
 	userDao := dao.UserDao{}
-	user := &model.User{}
-	err := userDao.UpdateUser(user, []string{})
+	user := &model.User{
+		UserId:       req.UserInfo.UserId,
+		UserName:     req.UserInfo.UserName,
+		UserPassword: req.UserInfo.UserPassword,
+		DepartmentId: req.UserInfo.DepartmentId,
+		CompanyId:    req.UserInfo.CompanyId,
+	}
+	updateKey := []string{"user_id", "user_password", "department_id", "company_id"}
+	get, err := userDao.GetUserByName(req.UserInfo.UserName)
+	if err != nil && !errors.Is(err, sql.ErrNoRows) {
+		log.Println("update get user name err:", err)
+		util.SetErrors(res.Response, ecode.ERROR)
+		return res
+	} else if get != nil && get.UserId != user.UserId {
+		util.SetErrors(res.Response, ecode.UserExists)
+		return res
+	} else if get == nil {
+		updateKey = append(updateKey, "user_name")
+	}
+	err = userDao.UpdateUser(user, updateKey)
 	if err != nil {
+		log.Println("update user info err:", err)
 		util.SetErrors(res.Response, ecode.ERROR)
 		return res
 	}
+	res.UserInfo = &userV1.UserInfo{
+		UserId:       user.UserId,
+		UserName:     user.UserName,
+		UserPassword: user.UserPassword,
+		CompanyId:    user.CompanyId,
+		DepartmentId: user.DepartmentId,
+		UpdateTime:   user.UpdateTime.Unix(),
+	}
+	util.SetErrors(res.Response, ecode.SUCCESS)
+	return res
+}
+
+func (h InfoHandler) GetUserInfo(req *userV1.GetUserInfoRequest) *userV1.GetUserInfoResponse {
+	res := &userV1.GetUserInfoResponse{
+		Response: &userV1.UserResponse{},
+	}
+	userDao := dao.UserDao{}
+	user, err := userDao.GetUserById(req.UserId)
+	if err != nil {
+		util.SetErrors(res.Response, ecode.UserNoExists)
+		return res
+	}
+
 	res.UserInfo = &userV1.UserInfo{
 		UserId:     user.UserId,
 		UserName:   user.UserName,
 		CreateTime: user.CreateTime.Unix(),
 		UpdateTime: user.UpdateTime.Unix(),
 	}
-	return nil
-}
-
-func (h InfoHandler) GetUserInfo(req *userV1.GetUserInfoRequest) *userV1.GetUserInfoResponse {
-	return nil
+	util.SetErrors(res.Response, ecode.SUCCESS)
+	return res
 }

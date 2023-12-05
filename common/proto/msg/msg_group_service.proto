@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+
+package user.v1;
+
+option go_package = "common/pkg/service/msg.v1";
+
+import "msg_message.proto";
+
+message CreateMessageGroupRequest{
+  MessageGroup message_group = 1;
+}
+
+message CreateMessageGroupResponse{
+  MsgResponse response = 1;
+  MessageGroup message_group = 2;
+}
+
+message GetMessageGroupRequest{
+  int64 group_id = 1;
+}
+
+message GetMessageGroupResponse{
+  MsgResponse response = 1;
+  MessageGroup message_group = 2;
+}
+
+message UpdateMessageGroupRequest{
+  MessageGroup message_group = 1;
+}
+
+message UpdateMessageGroupResponse{
+  MsgResponse response = 1;
+  MessageGroup message_group = 2;
+}
+
+service MsgGroupService {
+  rpc CreateMsgGroup(CreateMessageGroupRequest) returns (CreateMessageGroupResponse) {}
+  rpc GetMsgGroup (GetMessageGroupRequest) returns (GetMessageGroupResponse) {}
+  rpc UpdateMsgGroup (UpdateMessageGroupRequest) returns (UpdateMessageGroupResponse) {}
+}

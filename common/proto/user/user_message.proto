@@ -17,4 +17,11 @@ message UserInfo {
   string user_password = 5;
   int64 create_time = 6;
   int64 update_time = 7;
+  UserPhone user_phone = 8;
+}
+
+message UserPhone{
+  int64 user_id = 1;
+  int64 phone_id = 2;
+  string phone_no = 3;
 }

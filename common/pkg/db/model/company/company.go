@@ -1,6 +1,9 @@
-package model
+package model_company
 
-import "time"
+import (
+	"blog.hideyoshi.top/common/pkg/db/model"
+	"time"
+)
 
 type Company struct {
 	CompanyId       int64     `db:"company_id" json:"company_id"`
@@ -16,5 +19,5 @@ type Department struct {
 	DepartmentParent int64  `db:"department_parent" json:"department_parent"`
 	CompanyId        int64  `db:"company_id" json:"company_id"`
 	IsRoot           int64  `db:"is_root" json:"is_root"`
-	BaseModel
+	model.BaseModel
 }

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "common/pkg/service/user.v1";
+
+import "user_message.proto";
+
+message CreateUserPhoneRequest {
+  int64 user_id = 1;
+  string phone_no = 2;
+}
+
+message CreateUserPhoneResponse {
+  UserResponse response = 1;
+  UserPhone user_phone = 2;
+}
+
+message GetUserPhoneRequest{
+  int64 user_id = 1;
+}
+
+message GetUserPhoneResponse{
+  UserResponse response = 1;
+  UserPhone user_phone = 2;
+}
+
+service UserPhoneService {
+  rpc CreateUserPhone (CreateUserPhoneRequest) returns (CreateUserPhoneResponse) {}
+  rpc GetUserPhone (GetUserPhoneRequest) returns (GetUserPhoneResponse) {}
+}

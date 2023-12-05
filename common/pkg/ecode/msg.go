@@ -19,6 +19,9 @@ var codeMsg = map[int32]string{
 	UserNoExists:      "user no exists",
 	UserPasswordError: "user password error",
 	UserExists:        "user exists",
+	//msg
+	MsgGroupExists:   "msg group exists",
+	MsgGroupNoExists: "msg group no exists",
 }
 
 func GetMsg(key int32) string {

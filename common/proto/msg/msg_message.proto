@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package user.v1;
+
+option go_package = "common/pkg/service/msg.v1";
+
+message MsgResponse {
+  int32 code = 1;
+  string msg = 2;
+}
+
+message MessageGroup {
+  int64 group_id = 1;
+  string group_name = 2;
+  string group_content = 3;
+  int32 group_type = 4;
+  int64 company_id = 5;
+  int64 template_id = 6;
+  int64 create_time = 7;
+  int64 update_time = 8;
+  repeated MessageGroupUser message_group_user= 9;
+}
+
+message MessageGroupUser {
+  int64 group_id = 1;
+  int64 user_id = 2;
+  int64 phone_id = 3;
+  string phone_no = 4;
+}

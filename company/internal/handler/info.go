@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog.hideyoshi.top/common/pkg/db/model"
+	model "blog.hideyoshi.top/common/pkg/db/model/company"
 	"blog.hideyoshi.top/common/pkg/ecode"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
 	"blog.hideyoshi.top/company/internal/db/dao"

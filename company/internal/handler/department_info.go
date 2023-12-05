@@ -1,7 +1,7 @@
 package handler
 
 import (
-	"blog.hideyoshi.top/common/pkg/db/model"
+	model "blog.hideyoshi.top/common/pkg/db/model/company"
 	"blog.hideyoshi.top/common/pkg/ecode"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
 	"blog.hideyoshi.top/company/internal/cache"
@@ -32,11 +32,9 @@ func (h DepartmentInfoHandler) CreateDepartment(req *companyV1.CreateDepartmentR
 		DepartmentName:   req.DepartmentInfo.DepartmentName,
 		DepartmentParent: req.DepartmentInfo.DepartmentParent,
 		CompanyId:        req.DepartmentInfo.CompanyId,
-		BaseModel: model.BaseModel{
-			CreateTime: time.Now(),
-			UpdateTime: time.Now(),
-		},
 	}
+	department.CreateTime = time.Now()
+	department.UpdateTime = time.Now()
 	err := departmentDao.CreateDepartment(department)
 	if err != nil {
 		util.SetErrors(res.Response, ecode.ERROR)
@@ -99,10 +97,8 @@ func (h DepartmentInfoHandler) UpdateDepartment(req *companyV1.UpdateDepartmentR
 		CompanyId:        req.DepartmentInfo.CompanyId,
 		DepartmentName:   req.DepartmentInfo.DepartmentName,
 		DepartmentParent: req.DepartmentInfo.DepartmentParent,
-		BaseModel: model.BaseModel{
-			UpdateTime: time.Now(),
-		},
 	}
+	department.UpdateTime = time.Now()
 	departmentDao := dao.DepartmentDao{}
 	err := departmentDao.UpdateDepartment(department, []string{"company_id", "department_name", "department_parent", "update_time"})
 	if err != nil {

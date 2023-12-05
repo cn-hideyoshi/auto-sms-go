@@ -1,7 +1,7 @@
 package dao
 
 import (
-	"blog.hideyoshi.top/common/pkg/db/model"
+	model "blog.hideyoshi.top/common/pkg/db/model/user"
 	"fmt"
 	"strings"
 	"time"
@@ -33,10 +33,11 @@ func (c *UserDao) CreateUser(user *model.User) error {
 
 func (c *UserDao) UpdateUser(user *model.User, updateKey []string) error {
 	begin := _db.MustBegin()
-
+	updateKey = append(updateKey, "update_time")
 	for i, key := range updateKey {
 		updateKey[i] = fmt.Sprintf("%s=:%s", key, key)
 	}
+	user.UpdateTime = time.Now()
 	_, err := begin.NamedExec(fmt.Sprintf("update as_user set %s where user_id=:user_id", strings.Join(updateKey, ",")), user)
 	if err != nil {
 		return err
@@ -67,7 +68,7 @@ func (c *UserDao) GetUserByName(name string) (*model.User, error) {
 	return user, nil
 }
 
-func (c *UserDao) SelectUser(company *model.Company) error {
+func (c *UserDao) SelectUser(company *model.User) error {
 	// TODO: Implement logic for SelectCompany if needed
 	return nil
 }

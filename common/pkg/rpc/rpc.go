@@ -4,6 +4,7 @@ import (
 	"blog.hideyoshi.top/common/config"
 	"blog.hideyoshi.top/common/pkg/discovery"
 	companyV1 "blog.hideyoshi.top/common/pkg/service/company.v1"
+	msgV1 "blog.hideyoshi.top/common/pkg/service/msg.v1"
 	userV1 "blog.hideyoshi.top/common/pkg/service/user.v1"
 	"context"
 	"fmt"
@@ -24,10 +25,16 @@ type CommonDiscoveryServer struct {
 	connMap map[string]*grpc.ClientConn
 	mapLock sync.Mutex
 
-	UserLoginClient      userV1.UserLoginServiceClient
+	//company client
 	CompanyLoginClient   companyV1.CompanyLoginServiceClient
 	CompanyInfoClient    companyV1.CompanyInfoServiceClient
 	DepartmentInfoClient companyV1.DepartmentInfoServiceClient
+
+	//user client
+	UserInfoClient  userV1.UserInfoServiceClient
+	UserPhoneClient userV1.UserPhoneServiceClient
+	//msg client
+	MsgGroupClient msgV1.MsgGroupServiceClient
 }
 
 func NewCommonDiscoveryServer(config *config.EtcdConfig) *CommonDiscoveryServer {
@@ -49,14 +56,21 @@ func (gs *CommonDiscoveryServer) NewRpcClient(serverName string, client interfac
 		log.Fatalln("create grpc dial fail", err)
 	}
 	switch c := client.(type) {
-	case *userV1.UserLoginServiceClient:
-		*c = userV1.NewUserLoginServiceClient(conn)
+	//company
 	case *companyV1.CompanyLoginServiceClient:
 		*c = companyV1.NewCompanyLoginServiceClient(conn)
 	case *companyV1.CompanyInfoServiceClient:
 		*c = companyV1.NewCompanyInfoServiceClient(conn)
 	case *companyV1.DepartmentInfoServiceClient:
 		*c = companyV1.NewDepartmentInfoServiceClient(conn)
+	//user
+	case *userV1.UserInfoServiceClient:
+		*c = userV1.NewUserInfoServiceClient(conn)
+	case *userV1.UserPhoneServiceClient:
+		*c = userV1.NewUserPhoneServiceClient(conn)
+	//msg
+	case *msgV1.MsgGroupServiceClient:
+		*c = msgV1.NewMsgGroupServiceClient(conn)
 	default:
 		log.Fatalln("not support the grpc module")
 	}

@@ -16,9 +16,11 @@ message MessageGroup {
   int32 group_type = 4;
   int64 company_id = 5;
   int64 template_id = 6;
-  int64 create_time = 7;
-  int64 update_time = 8;
-  repeated MessageGroupUser message_group_user= 9;
+  int64 group_send_time = 7;
+  int32 group_status = 8;
+  int64 create_time = 9;
+  int64 update_time = 10;
+  repeated MessageGroupUser message_group_user= 11;
 }
 
 message MessageGroupUser {

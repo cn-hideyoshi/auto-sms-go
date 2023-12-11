@@ -15,6 +15,8 @@ func InitConfig() *MsgConfig {
 	c := &MsgConfig{
 		Config: ViperConfig,
 	}
-	c.ReadConfig(config.GrpcModules[:])
+	modules := config.GrpcModules[:]
+	modules = append(modules, config.ModuleAmqp)
+	c.ReadConfig(modules)
 	return c
 }

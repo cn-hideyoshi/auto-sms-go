@@ -10,10 +10,11 @@ type Config struct {
 	Viper *viper.Viper
 	//Modules []Configurable
 	Grpc  *GrpcConfig
+	Http  *HttpConfig
 	Etcd  *EtcdConfig
 	Db    *DbConfig
 	Redis *RedisConfig
-	Http  *HttpConfig
+	Amqp  *AmqpConfig
 }
 
 func NewConfig() Config {
@@ -44,6 +45,8 @@ func (c *Config) ReadConfig(modules []int) {
 			c.readHttpConfig()
 		case ModuleRedis:
 			c.readRedisConfig()
+		case ModuleAmqp:
+			c.readAmqpConfig()
 		}
 	}
 }

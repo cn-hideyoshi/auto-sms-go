@@ -33,6 +33,7 @@ func NewResolver(EtcdAddr []string) *EtcdResolver {
 		DialTimeout: 5 * time.Second,
 	}
 }
+
 func (er *EtcdResolver) Build(target resolver.Target, cc resolver.ClientConn, opts resolver.BuildOptions) (resolver.Resolver, error) {
 	// 创建 etcd 客户端连接
 	etcdClient, err := clientV3.New(clientV3.Config{
@@ -58,12 +59,12 @@ func (er *EtcdResolver) Build(target resolver.Target, cc resolver.ClientConn, op
 
 func (er *EtcdResolver) watchUpdates() {
 	ticker := time.NewTicker(5 * time.Second)
+watch:
 	for {
 		select {
 		case <-er.closeCh:
-			log.Println("resolver closed")
-			close(er.closeCh)
-			return
+			log.Fatalln(1)
+			break watch
 		case <-ticker.C:
 			err := er.queryEtcd()
 			if err != nil {
@@ -107,5 +108,7 @@ func (er *EtcdResolver) Scheme() string {
 }
 
 func (er *EtcdResolver) Close() {
-	er.closeCh <- struct{}{}
+	log.Println("call close func")
+	//er.closeCh <- struct{}{}
+	close(er.closeCh)
 }

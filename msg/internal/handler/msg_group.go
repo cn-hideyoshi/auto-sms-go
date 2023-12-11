@@ -9,6 +9,7 @@ import (
 	"database/sql"
 	"errors"
 	"log"
+	"time"
 )
 
 type MsgGroupHandler struct {
@@ -24,12 +25,17 @@ func (h MsgGroupHandler) CreateMsgGroup(req *msgV1.CreateMessageGroupRequest) *m
 	}
 
 	reqMessageGroup := req.MessageGroup
+	if err != nil {
+		log.Println("parse time err:", err)
+		return nil
+	}
 	group := &model.MsgGroup{
-		CompanyId:    reqMessageGroup.CompanyId,
-		GroupName:    reqMessageGroup.GroupName,
-		GroupContent: reqMessageGroup.GroupContent,
-		GroupType:    reqMessageGroup.GroupType,
-		TemplateId:   reqMessageGroup.TemplateId,
+		CompanyId:     reqMessageGroup.CompanyId,
+		GroupName:     reqMessageGroup.GroupName,
+		GroupContent:  reqMessageGroup.GroupContent,
+		GroupType:     reqMessageGroup.GroupType,
+		TemplateId:    reqMessageGroup.TemplateId,
+		GroupSendTime: time.Unix(reqMessageGroup.GroupSendTime, 0),
 	}
 	err = mDao.CreateMsgGroup(group)
 	if err != nil {

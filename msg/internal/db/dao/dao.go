@@ -12,7 +12,7 @@ var _db *sqlx.DB
 
 func init() {
 	DbConfig := config.C.Db
-	DataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true", DbConfig.Username, DbConfig.Password, DbConfig.Host, DbConfig.Port, DbConfig.DbName)
+	DataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true&loc=Local", DbConfig.Username, DbConfig.Password, DbConfig.Host, DbConfig.Port, DbConfig.DbName)
 	database := dao.Database{
 		Driver:         DbConfig.Driver,
 		DataSourceName: DataSourceName,

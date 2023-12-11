@@ -6,6 +6,7 @@ const (
 	ModuleGrpc
 	ModuleRedis
 	ModuleHttp
+	ModuleAmqp
 )
 
 var GrpcModules = [4]int{ModuleDb, ModuleEtcd, ModuleGrpc, ModuleRedis}

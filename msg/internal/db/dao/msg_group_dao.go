@@ -15,7 +15,9 @@ func (c *MsgGroupDao) CreateMsgGroup(group *model.MsgGroup) error {
 	begin := _db.MustBegin()
 	group.CreateTime = time.Now()
 	group.UpdateTime = time.Now()
-	result, err := begin.NamedExec("insert into as_msg_group (group_id,group_name,group_content,group_type,company_id,template_id,create_time,update_time) values (:group_id,:group_name,:group_content,:group_type,:company_id,:template_id,:create_time,:update_time)", group)
+	result, err := begin.NamedExec("insert into as_msg_group "+
+		"(group_id,group_name,group_content,group_type,company_id,group_send_time,template_id,create_time,update_time) values "+
+		"(:group_id,:group_name,:group_content,:group_type,:company_id,:group_send_time,:template_id,:create_time,:update_time)", group)
 	if err != nil {
 		return err
 	}
@@ -61,6 +63,12 @@ func (c *MsgGroupDao) GetMsgGroupById(id int64) (*model.MsgGroup, error) {
 		return nil, err
 	}
 	return user, nil
+}
+
+func (c MsgGroupDao) SelectTimeToSendGroup(timeNow time.Time) ([]*model.MsgGroup, error) {
+	groups := make([]*model.MsgGroup, 10)
+	err := _db.Select(&groups, "select * from as_msg_group where group_send_time<=? and group_status=0 limit 99", timeNow)
+	return groups, err
 }
 
 func (c *MsgGroupDao) SelectUser(company *model.MsgGroup) error {

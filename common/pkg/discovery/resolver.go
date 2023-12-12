@@ -59,12 +59,9 @@ func (er *EtcdResolver) Build(target resolver.Target, cc resolver.ClientConn, op
 
 func (er *EtcdResolver) watchUpdates() {
 	ticker := time.NewTicker(5 * time.Second)
-watch:
 	for {
 		select {
 		case <-er.closeCh:
-			log.Fatalln(1)
-			break watch
 		case <-ticker.C:
 			err := er.queryEtcd()
 			if err != nil {
@@ -108,7 +105,4 @@ func (er *EtcdResolver) Scheme() string {
 }
 
 func (er *EtcdResolver) Close() {
-	log.Println("call close func")
-	//er.closeCh <- struct{}{}
-	close(er.closeCh)
 }

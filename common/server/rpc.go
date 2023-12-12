@@ -55,10 +55,10 @@ func (g GrpcServer) RunGrpc(c GrpcConfig) {
 		c.RegisterFunc(server)
 		lis, err := net.Listen("tcp", c.Addr)
 		if err != nil {
-			log.Println(g.grpcConfig.Name + " 启动GPC失败")
+			log.Println(g.grpcConfig.Name + " start GRPC fail")
 
 		}
-		log.Println(g.grpcConfig.Name + " GRPC启动成功..." + g.grpcConfig.Addr)
+		log.Println(g.grpcConfig.Name + " GRPC start success..." + g.grpcConfig.Addr)
 		err = server.Serve(lis)
 		if err != nil {
 			log.Println(g.grpcConfig.Name+" server started error", err)

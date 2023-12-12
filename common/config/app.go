@@ -15,6 +15,7 @@ type Config struct {
 	Db    *DbConfig
 	Redis *RedisConfig
 	Amqp  *AmqpConfig
+	Sms   *SmsConfig
 }
 
 func NewConfig() Config {
@@ -47,6 +48,8 @@ func (c *Config) ReadConfig(modules []int) {
 			c.readRedisConfig()
 		case ModuleAmqp:
 			c.readAmqpConfig()
+		case ModuleSms:
+			c.readSmsConfig()
 		}
 	}
 }

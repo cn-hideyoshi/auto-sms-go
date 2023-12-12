@@ -32,18 +32,17 @@ type AliYunBatchArgs struct {
 	OutId             *string
 }
 
-func (a AliYun) SendBatchSms(args interface{}) (_err error) {
+func (a AliYun) SendBatchSms(args *AliYunBatchArgs) (_err error) {
 	client, _err := a.createClient(a.AccessKeyId, a.AccessKeySecret)
 	if _err != nil {
 		return _err
 	}
-	aliyunBatchArgs := args.(AliYunBatchArgs)
 	sendBatchSmsRequest := &dysmsapi20170525.SendBatchSmsRequest{
-		PhoneNumberJson:   aliyunBatchArgs.PhoneNumberJson,
-		SignNameJson:      aliyunBatchArgs.SignNameJson,
-		TemplateCode:      aliyunBatchArgs.TemplateCode,
-		TemplateParamJson: aliyunBatchArgs.TemplateParamJson,
-		OutId:             aliyunBatchArgs.OutId,
+		PhoneNumberJson:   args.PhoneNumberJson,
+		SignNameJson:      args.SignNameJson,
+		TemplateCode:      args.TemplateCode,
+		TemplateParamJson: args.TemplateParamJson,
+		OutId:             args.OutId,
 	}
 	runtime := &util.RuntimeOptions{}
 	tryErr := func() (_e error) {
@@ -52,7 +51,6 @@ func (a AliYun) SendBatchSms(args interface{}) (_err error) {
 				_e = r
 			}
 		}()
-		// 复制代码运行请自行打印 API 的返回值
 		_, _err = client.SendBatchSmsWithOptions(sendBatchSmsRequest, runtime)
 		if _err != nil {
 			return _err

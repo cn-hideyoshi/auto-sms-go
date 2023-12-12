@@ -35,7 +35,6 @@ func (c *Consumer) RunConsumer(handler func(<-chan amqp.Delivery, chan<- error, 
 	var err error
 	config := amqp.Config{Properties: amqp.NewConnectionProperties()}
 	config.Properties.SetClientConnectionName("consumer" + time.Now().Format(time.DateTime))
-	log.Printf("dialing %q", c.config.AmqpURI)
 	c.conn, err = amqp.DialConfig(*c.config.AmqpURI, config)
 	if err != nil {
 		return fmt.Errorf("Dial: %s", err)

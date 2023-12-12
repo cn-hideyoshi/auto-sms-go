@@ -18,8 +18,18 @@ type MsgGroup struct {
 }
 
 type MsgGroupUser struct {
-	GroupId int64  `db:"group_id" json:"group_id"`
-	UserId  int64  `db:"user_id" json:"user_id"`
-	PhoneId int64  `db:"phone_id" json:"phone_id"`
-	PhoneNo string `db:"phone_no" json:"phone_no"`
+	GroupId  int64  `db:"group_id" json:"group_id"`
+	UserId   int64  `db:"user_id" json:"user_id"`
+	UserName string `db:"user_name" json:"user_name"`
+	PhoneId  int64  `db:"phone_id" json:"phone_id"`
+	PhoneNo  string `db:"phone_no" json:"phone_no"`
+}
+
+type MsgTemplate struct {
+	TemplateId       int64  `db:"template_id" json:"template_id"`
+	TemplateContent  string `db:"template_content" json:"template_content"`
+	TemplateCode     string `db:"template_code" json:"template_code"`
+	TemplateParamKey string `db:"template_param_key" json:"template_param_key"`
+	TemplateSign     string `db:"template_sign" json:"template_sign"`
+	model.BaseModel
 }

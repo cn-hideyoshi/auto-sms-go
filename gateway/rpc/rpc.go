@@ -15,6 +15,9 @@ func init() {
 	Server.NewRpcClient("company", &Server.CompanyLoginClient)
 	Server.NewRpcClient("company", &Server.CompanyInfoClient)
 	Server.NewRpcClient("company", &Server.DepartmentInfoClient)
+	Server.NewRpcClient("user", &Server.UserPhoneClient)
+	Server.NewRpcClient("user", &Server.UserInfoClient)
+	Server.NewRpcClient("msg", &Server.MsgGroupClient)
 	//defer Server.ResolverClose()
 	log.Println("init client success...")
 }

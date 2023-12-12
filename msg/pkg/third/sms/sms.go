@@ -5,11 +5,11 @@ type SmsServer struct {
 	AccessKeySecret *string
 }
 
-func (s SmsServer) SetAccessKeyId(key string) {
+func (s *SmsServer) SetAccessKeyId(key string) {
 	s.AccessKeyId = &key
 }
 
-func (s SmsServer) SetAccessKeySecret(secret string) {
+func (s *SmsServer) SetAccessKeySecret(secret string) {
 	s.AccessKeySecret = &secret
 }
 

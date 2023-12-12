@@ -18,9 +18,9 @@ func Run(r *gin.Engine, servName string, addr string) {
 		Handler: r,
 	}
 	go func() {
-		log.Printf("%s启动,端口号%s", servName, serv.Addr)
+		log.Printf("%s start ,port :%s", servName, serv.Addr)
 		if err := serv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("%s启动异常:%v", servName, err)
+			log.Fatalf("%s start fail:%v", servName, err)
 		}
 	}()
 

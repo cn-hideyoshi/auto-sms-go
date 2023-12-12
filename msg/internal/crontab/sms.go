@@ -15,6 +15,7 @@ func (s SMSCrontab) CheckSmsTime() {
 	queue := amqp.SmsQueue{}
 	groupDao := dao.MsgGroupDao{}
 	groupUserDao := dao.MsgGroupUserDao{}
+	templateDao := dao.MsgTemplateDao{}
 	group, err := groupDao.SelectTimeToSendGroup(time.Now())
 	if err != nil {
 		log.Println("SelectTimeToSendGroup err:", err)
@@ -22,9 +23,11 @@ func (s SMSCrontab) CheckSmsTime() {
 
 	for _, msgGroup := range group {
 		users, _ := groupUserDao.SelectMsgGroupByGroupId(msgGroup.GroupId)
+		template, _ := templateDao.GetMsgTemplateById(msgGroup.TemplateId)
 		body := amqp.SmsBody{
-			Info:  *msgGroup,
-			Users: users,
+			Info:     msgGroup,
+			Users:    users,
+			Template: template,
 		}
 		marshal, _ := json.Marshal(body)
 

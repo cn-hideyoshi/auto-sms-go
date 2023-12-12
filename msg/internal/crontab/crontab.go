@@ -16,7 +16,7 @@ func NewCrontab() *Crontab {
 }
 
 func (c *Crontab) Start() {
-	log.Println("定时任务监听中...")
+	log.Println("crontab init success...")
 	ticker := time.NewTicker(time.Second)
 	for {
 		select {

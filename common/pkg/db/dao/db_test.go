@@ -13,7 +13,7 @@ type TestTb struct {
 func TestDatabase_InitDb(t *testing.T) {
 	database := Database{
 		Driver:         "mysql",
-		DataSourceName: "hideyoshi:123456@tcp(192.168.1.5:3306)/welfare-go",
+		DataSourceName: "hideyoshi:123456@tcp(192.168.0.137:3306)/welfare-go",
 	}
 	err := database.InitDb()
 	if err != nil {

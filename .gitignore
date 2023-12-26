@@ -4,3 +4,5 @@ auth
 *.go-back
 *_test.go
 *.pb.go
+__debug_*
+.vscode

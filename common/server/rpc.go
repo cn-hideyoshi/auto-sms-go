@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
 	"os"
@@ -51,13 +52,14 @@ type GrpcConfig struct {
 
 func (g GrpcServer) RunGrpc(c GrpcConfig) {
 	defer log.Printf("%s关闭成功", g.grpcConfig.Name)
+	log.SetPrefix(fmt.Sprintf("[%s] ", g.grpcConfig.Name))
 	server := grpc.NewServer()
 	go func() {
 		c.RegisterFunc(server)
 		lis, err := net.Listen("tcp", c.Addr)
 		if err != nil {
 			log.Fatalln(g.grpcConfig.Name + " start GRPC fail")
-
+			return
 		}
 		log.Println(g.grpcConfig.Name + " GRPC start success..." + g.grpcConfig.Addr)
 		err = server.Serve(lis)

@@ -1,9 +1,10 @@
 package config
 
 import (
-	"github.com/spf13/viper"
 	"log"
 	"os"
+
+	"github.com/spf13/viper"
 )
 
 type Config struct {
@@ -18,12 +19,12 @@ type Config struct {
 	Sms   *SmsConfig
 }
 
-func NewConfig() Config {
+func NewConfig(serverName string) Config {
 	config := Config{
 		Viper: viper.New(),
 	}
 	workDir, _ := os.Getwd()
-	config.Viper.SetConfigName("app")
+	config.Viper.SetConfigName(serverName)
 	config.Viper.SetConfigType("yaml")
 	config.Viper.AddConfigPath(workDir + "/config")
 	err := config.Viper.ReadInConfig()

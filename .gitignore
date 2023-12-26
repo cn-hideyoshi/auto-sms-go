@@ -6,3 +6,8 @@ auth
 *.pb.go
 __debug_*
 .vscode
+/bin
+company.yaml
+user.yaml
+msg.yaml
+gateway.yaml

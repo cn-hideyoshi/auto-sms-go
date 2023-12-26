@@ -1,16 +1,17 @@
 package server
 
 import (
-	"blog.hideyoshi.top/common/config"
-	"blog.hideyoshi.top/common/pkg/discovery"
 	"context"
-	"google.golang.org/grpc"
 	"log"
 	"net"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"blog.hideyoshi.top/common/config"
+	"blog.hideyoshi.top/common/pkg/discovery"
+	"google.golang.org/grpc"
 )
 
 type GrpcServer struct {
@@ -55,7 +56,7 @@ func (g GrpcServer) RunGrpc(c GrpcConfig) {
 		c.RegisterFunc(server)
 		lis, err := net.Listen("tcp", c.Addr)
 		if err != nil {
-			log.Println(g.grpcConfig.Name + " start GRPC fail")
+			log.Fatalln(g.grpcConfig.Name + " start GRPC fail")
 
 		}
 		log.Println(g.grpcConfig.Name + " GRPC start success..." + g.grpcConfig.Addr)

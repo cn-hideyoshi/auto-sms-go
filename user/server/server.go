@@ -5,13 +5,13 @@ import (
 	"blog.hideyoshi.top/common/server"
 	"blog.hideyoshi.top/user/config"
 	"blog.hideyoshi.top/user/internal/service"
-	"blog.hideyoshi.top/user/rpc"
 	"google.golang.org/grpc"
+
+	_ "blog.hideyoshi.top/user/rpc"
 )
-import _ "blog.hideyoshi.top/user/rpc"
 
 func Start() {
-	grpcServer := server.NewGrpcServer(config.C.Etcd, config.C.Grpc, rpc.Clients.ResolverClose)
+	grpcServer := server.NewGrpcServer(config.C.Etcd, config.C.Grpc)
 	grpcServer.RegisterEtcd()
 	c := server.GrpcConfig{
 		Addr: config.C.Grpc.Addr,

@@ -11,7 +11,7 @@ type GatewayConfig struct {
 }
 
 func InitConfig() *GatewayConfig {
-	ViperConfig := config.NewConfig()
+	ViperConfig := config.NewConfig("gateway")
 	c := &GatewayConfig{
 		Config: ViperConfig,
 	}

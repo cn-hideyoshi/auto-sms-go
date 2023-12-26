@@ -11,7 +11,7 @@ type MsgConfig struct {
 }
 
 func InitConfig() *MsgConfig {
-	ViperConfig := config.NewConfig()
+	ViperConfig := config.NewConfig("msg")
 	c := &MsgConfig{
 		Config: ViperConfig,
 	}

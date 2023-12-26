@@ -11,7 +11,7 @@ type CompanyConfig struct {
 }
 
 func InitConfig() *CompanyConfig {
-	ViperConfig := config.NewConfig()
+	ViperConfig := config.NewConfig("company")
 	c := &CompanyConfig{
 		Config: ViperConfig,
 	}

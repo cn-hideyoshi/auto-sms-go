@@ -11,7 +11,7 @@ type UserConfig struct {
 var C = InitConfig()
 
 func InitConfig() *UserConfig {
-	ViperConfig := config.NewConfig()
+	ViperConfig := config.NewConfig("user")
 	userConfig := &UserConfig{
 		Config: ViperConfig,
 	}
